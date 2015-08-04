@@ -1,0 +1,29 @@
+[user]
+  name = Tyler J. Diaz
+  username = tylerdiaz
+  email = me@tylerdiaz.com
+[filter "media"]
+  required = true
+  clean = git media clean %f
+  smudge = git media smudge %f
+[core]
+  editor = emacs
+  autocrlf = input
+  attributesfile = /Users/tylerdiaz/.gitattributes
+[color]
+  ui = true
+  diff = auto
+[push]
+  default = current
+[alias]
+  gr = grep -n
+  s = status
+  tree = log --graph --decorate --pretty=oneline --abbrev-commit
+[status]
+  showUntrackedFiles = all
+[credential]
+  helper = osxkeychain
+[filter "lfs"]
+  clean = git lfs clean %f
+  smudge = git lfs smudge %f
+  required = true
