@@ -2,6 +2,9 @@ export EDITOR=subl
 export PATH=/usr/local/bin:$PATH
 export HISTSIZE="" #infinite history!
 
+# The best editor
+alias emacs=ec
+
 # Marking directories for quick navigation
 export MARKPATH=$HOME/.marks
 function jump {

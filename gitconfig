@@ -27,3 +27,7 @@
   clean = git lfs clean %f
   smudge = git lfs smudge %f
   required = true
+[merge]
+  tool = ediff
+[mergetool "ediff"]
+  cmd = emacs -c -a \"\"  --eval \"(ediff-merge-files-with-ancestor \\\"$LOCAL\\\" \\\"$REMOTE\\\" \\\"$BASE\\\" nil \\\"$MERGED\\\")\"
