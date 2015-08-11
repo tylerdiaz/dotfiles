@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: coffeescript_fn()
+# key: fn
+# --
+${1:fn}: (${2:params}) ->
+  $

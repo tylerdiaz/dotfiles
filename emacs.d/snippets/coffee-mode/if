@@ -1,0 +1,9 @@
+# -*- mode: snippet -*-
+# name: Conditional
+# key: if
+# binding: direct-keybinding
+# --
+if ${1:(${2:condition})}
+  ${3:# success}
+else${4: if second_condition}
+  ${5:# something else}

@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: for (Array comprehension)
+# key: for
+# binding: direct-keybinding
+# --
+for ${1:val}, index in ${2:array}
+  $0

@@ -1,0 +1,7 @@
+# -*- mode: snippet; -*-
+# name: for (Object Comprehension)
+# key: for
+# binding: direct-keybinding
+# --
+for ${1:key}, ${2:index} of ${3:object}
+  $0

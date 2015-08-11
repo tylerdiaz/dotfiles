@@ -1,0 +1,9 @@
+# -*- mode: snippet -*-
+# name: switch
+# key: switch
+# binding: direct-keybinding
+# --
+switch ${1:variable}
+  when ${2:value_1} ${3:then ${4:fn()}}
+  ${5:else
+    ${6:# seperate block of code}}
