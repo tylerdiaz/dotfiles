@@ -532,8 +532,6 @@ by Prelude.")
   (beginning-of-line (or (and arg (1+ arg)) 2))
   (if (and arg (not (= 1 arg))) (message "%d lines copied" arg)))
 
-(setq bitly-access-token "5690a3863775485d27819880a329e793d6685f3c")
-
 (require 'mmm-mode)
 (mmm-add-classes
  '((jsx
