@@ -31,6 +31,10 @@
 ; Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
 ; Boston, MA 02110-1301, USA.
 
+(tool-bar-mode 0)
+(menu-bar-mode 0)
+(scroll-bar-mode 0)
+
 ;;; Code:
 (defvar current-user
   (getenv
@@ -420,10 +424,6 @@ by Prelude.")
                                         ; (scroll-bar-mode -1)
 (global-auto-highlight-symbol-mode t)
 
-(tool-bar-mode 0)
-(menu-bar-mode 0)
-(scroll-bar-mode 0)
-
 (defun rename-current-buffer-file ()
   "Renames current buffer and file it is visiting."
   (interactive)
@@ -446,8 +446,8 @@ by Prelude.")
 
 (require 'yasnippet)
 (setq yas-snippet-dirs '("~/.emacs.d/snippets"))
-(setq yas-global-mode 't)
-(setq yas-indent-mode 'fixed)
+(setq yas-global-mode t)
+(setq yas-indent-mode 'auto)
 
 (load "~/.emacs.d/config/prodigy.el")
 
