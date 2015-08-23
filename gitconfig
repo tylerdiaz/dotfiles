@@ -7,7 +7,6 @@
   clean = git media clean %f
   smudge = git media smudge %f
 [core]
-  editor = emacs
   autocrlf = input
   attributesfile = /Users/tylerdiaz/.gitattributes
 [color]
