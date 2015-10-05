@@ -136,9 +136,9 @@ by Prelude.")
  ;; greet the use with some useful tip
  (run-at-time 5 nil 'prelude-tip-of-the-day))
 
-(set-default-font "Inconsolata-24")
+(set-default-font "Inconsolata-18")
 (set-face-attribute 'default nil :family "Inconsolata")
-(add-to-list 'default-frame-alist '(font . "Inconsolata-24"))
+(add-to-list 'default-frame-alist '(font . "Inconsolata-18"))
 
 ;;; init.el ends here
 (add-to-list 'custom-theme-load-path "~/.emacs.d/themes/")
@@ -318,19 +318,15 @@ by Prelude.")
            (mapcar (lambda (b)
                      (when (buffer-file-name b) (buffer-name b)))
                    (buffer-list))))))
-(key-chord-mode 1)
 
-;; Key chords!
-(key-chord-define-global "jj" 'ace-jump-mode)
-
-;; set keybindings
-(global-set-key (kbd "C-M-s") 'instant-search-using-helm)
-(global-set-key (kbd "C-M-S-s") 'helm-resume)
-(global-set-key (kbd "C->") 'mc/mark-next-like-this)
-(global-set-key (kbd "C-<") 'mc/mark-previous-like-this)
-(global-set-key (kbd "C-c C-<") 'mc/mark-all-like-this-dwim)
-(global-set-key (kbd "C-x C-r") 'rename-current-buffer-file)
-(global-set-key (kbd "C-c C-k") 'copy-line)
+(defun comment-or-uncomment-region-or-line ()
+  "Comment or uncomment a region or portion of code"
+  (interactive)
+  (let (beg end)
+    (if (region-active-p)
+        (setq beg (region-beginning) end (region-end))
+      (setq beg (line-beginning-position) end (line-end-position)))
+    (comment-or-uncomment-region beg end)))
 
 (defun sm-find-tag-other-window ()
   (interactive)
@@ -361,6 +357,30 @@ by Prelude.")
   (save-restriction
     (org-agenda-set-restriction-lock)))
 
+;; Key chords!
+(key-chord-mode 1)
+(key-chord-define-global "jj" 'avy-goto-word-or-subword-1)
+(key-chord-define-global "nn" 'yas-new-snippet)
+
+(global-set-key (kbd "s-.") 'avy-goto-word-or-subword-1)
+(global-set-key (kbd "s-`") 'ace-window)
+(global-set-key (kbd "s-W") 'kill-some-buffers)
+(global-set-key (kbd "s-w") 'kill-this-buffer)
+
+(global-set-key (kbd "s-Z") 'undo-tree-redo)
+(global-set-key (kbd "s-z") 'undo-tree-undo)
+
+;; set keybindings
+(global-set-key (kbd "C-M-s") 'instant-search-using-helm)
+(global-set-key (kbd "C-M-S-s") 'helm-resume)
+(global-set-key (kbd "C->") 'mc/mark-next-like-this)
+(global-set-key (kbd "C-<") 'mc/mark-previous-like-this)
+(global-set-key (kbd "C-c C-<") 'mc/mark-all-like-this-dwim)
+(global-set-key (kbd "C-x C-r") 'rename-current-buffer-file)
+(global-set-key (kbd "C-c C-k") 'copy-line)
+(global-set-key (kbd "C-c C-r") 'remember)
+(global-set-key (kbd "C-c a") 'org-agenda)
+
 ;; don't prompt when finding a tag
 (global-set-key (kbd "M-.") 'sm-find-tag-other-window)
 
@@ -377,23 +397,17 @@ by Prelude.")
 ;; Custom emacs shortcuts!
 (global-set-key (kbd "<C-S-down>") 'move-line-down)
 (global-set-key (kbd "<C-S-up>") 'move-line-up)
-(global-set-key (kbd "C-x /") 'toggle-comment-on-line)
+(global-set-key (kbd "C-x /") 'comment-or-uncomment-region-or-line)
 (global-set-key (kbd "s-SPC") 'er/expand-region)
 (global-set-key (kbd "<delete>") 'delete-char)
 (global-set-key (kbd "C-d") 'duplicate-line)
-(global-set-key (kbd "C-c n") #'lunaryorn-new-buffer-frame)
 (global-set-key [remap goto-line] 'goto-line-with-feedback)
-(global-set-key (kbd "<f5>") 'bh/org-todo)
+(global-set-key "\C-m" 'newline-and-indent)
 
 ;; SUPPER COMMANDS
 (global-set-key (kbd "s-b") 'helm-buffers-list)
 (global-set-key (kbd "s-t") 'projectile-find-file)
-;(global-set-key (kbd "s-t") 'imenu)
-(global-set-key (kbd "s-\\") 'xah-change-bracket-pairs)
 (global-set-key (kbd "s-F") 'helm-git-grep-at-point)
-
-;; Local key modes
-; (define-key god-local-mode-map (kbd ".") 'repeat)
 
 (normal-erase-is-backspace-mode 1)
 
@@ -451,6 +465,17 @@ by Prelude.")
 
 (load "~/.emacs.d/config/prodigy.el")
 
+(add-hook 'web-mode-hook #'yas-minor-mode)
+(add-hook 'coffee-mode-hook #'yas-minor-mode)
+(add-hook 'ruby-mode-hook #'yas-minor-mode)
+
+; Emmet stuff
+(add-hook 'coffee-mode-hook  'emmet-mode)
+(add-hook 'sgml-mode-hook 'emmet-mode)
+(add-hook 'web-mode-hook 'emmet-mode)
+(add-hook 'emmet-mode-hook (lambda () (setq emmet-indent-after-insert nil)))
+(add-hook 'emmet-mode-hook (lambda () (setq emmet-indentation 2))) ;; indent 2 spaces.
+
 (setq visible-bell nil)
   (setq ring-bell-function `(lambda ()
                             (set-face-background 'default "#111111")
@@ -493,6 +518,14 @@ by Prelude.")
   (beginning-of-line (or (and arg (1+ arg)) 2))
   (if (and arg (not (= 1 arg))) (message "%d lines copied" arg)))
 
+(defun font-lock-comment-annotations ()
+  "Highlight a bunch of well known comment annotations.
+
+This functions should be added to the hooks of major modes for programming."
+  (font-lock-add-keywords
+   nil '(("\\<\\(FIX\\(ME\\)?\\|TODO\\|OPTIMIZE\\|HACK\\|REFACTOR\\):"
+          1 font-lock-warning-face t))))
+
 (require 'mmm-mode)
 (mmm-add-classes
  '((jsx
@@ -515,6 +548,19 @@ by Prelude.")
  '(js2-basic-offset 2)
  '(js2-bounce-indent-p -1)
 )
+
+; Auto indentation
+(add-hook 'ruby-mode-hook #'aggressive-indent-mode)
+
+(setq web-mode-extra-auto-pairs
+  '(("erb"  . (("beg" "end")))
+  ("php"  . (("beg" "end")
+  ("beg" "end")))
+))
+
+(add-hook 'after-init-hook 'inf-ruby-switch-setup)
+(add-hook 'ruby-mode-common-hook 'font-lock-comment-annotations)
+(setq compilation-scroll-output t)
 
 (defun apply-function-to-region-lines (fn)
   (interactive "function to apply to lines in region: ")
@@ -558,3 +604,5 @@ by Prelude.")
   (find-file-at-point)
   (if (not (equal line-num 0))
       (goto-line line-num)))
+
+(setq ns-use-srgb-colorspace nil)
