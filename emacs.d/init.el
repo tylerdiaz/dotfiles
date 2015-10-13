@@ -153,8 +153,7 @@
 
 (setq visible-bell nil)
 (setq ring-bell-function `(lambda ()
-                            (set-face-background 'default "#111111")
-                            (set-face-background 'default "black")))
+                            (message "*ding*")))
 
 (defun font-lock-comment-annotations ()
   "Highlight a bunch of well known comment annotations.
