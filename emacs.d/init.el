@@ -1,13 +1,13 @@
 (tool-bar-mode 0)
 (menu-bar-mode 0)
 (scroll-bar-mode 0)
-(desktop-save-mode 1)
+; (desktop-save-mode 1)
 
 ;; Emacs from command line
 (x-focus-frame nil)
 
 ;; Starting emacs config lib
-(load "~/.emacs.d/config/prelude.el")
+(load "~/.emacs.d/prelude.el")
 
 (set-face-attribute 'default nil :family "Inconsolata")
 (add-to-list 'default-frame-alist '(font . "Inconsolata-18"))
@@ -16,6 +16,7 @@
       scroll-preserve-screen-position 1
       indent-line-function 'insert-tab)
 
+(setq ns-use-srgb-colorspace 't)
 (setq-default indent-tabs-mode nil)
 (setq-default tab-width 2)
 
@@ -28,6 +29,7 @@
 ;; File mode aliases
 (add-to-list 'auto-mode-alist '("\\.json$" . js-mode))
 (add-to-list 'auto-mode-alist '("\\.cjsx$" . coffee-mode))
+(add-to-list 'auto-mode-alist '("\\.erb$" . web-mode))
 
 ;; Auto refresh buffers
 (global-auto-revert-mode 1)
@@ -43,6 +45,7 @@
 ;; Helm
 (require 'helm)
 (require 'helm-config)
+(require 'prelude-helm-everywhere)
 (helm-mode 1)
 (setq helm-split-window-in-side-p           t ; open helm buffer inside current window, not occupy whole other window
       helm-move-to-line-cycle-in-source     t ; move to end or beginning of source when reaching top or bottom of source.
@@ -93,7 +96,10 @@
 (setq whitespace-action '(auto-cleanup))
 (custom-set-variables '(coffee-tab-width 2))
 
-(sml/setup)
+;; Smart mode line
+(setq sml/theme 'light)
+
+;; Terse yes/no
 (fset 'yes-or-no-p 'y-or-n-p)
 
 ;; This is auto completion via tags.
@@ -106,6 +112,7 @@
 
 (add-to-list 'default-frame-alist '(fullscreen . maximized))
 
+;; Show how much battery percent I have left (I fullscreen often)
 (add-hook 'after-init-hook #'fancy-battery-mode)
 
 ;; Speedbar config
@@ -132,6 +139,14 @@
   (jump-to-register :magit-fullscreen))
 
 (setq magit-diff-refine-hunk 'all)
+(setq magit-push-always-verify nil)
+(add-to-list 'magit-no-confirm 'stage-all-changes)
+(defun magit-key-mode--add-default-options (arguments)
+  (if (eq (car arguments) 'pulling)
+      (list 'pulling (list "--rebase"))
+    arguments))
+
+(advice-add 'magit-key-mode :filter-args #'magit-key-mode--add-default-options)
 
 ;; Quick and easy snippets
 (require 'yasnippet)
@@ -163,6 +178,7 @@ This functions should be added to the hooks of major modes for programming."
    nil '(("\\<\\(FIX\\(ME\\)?\\|TODO\\|OPTIMIZE\\|HACK\\|REFACTOR\\):"
           1 font-lock-warning-face t))))
 
+;; Allow jsx to somewhat play with coffescript
 (require 'mmm-mode)
 (mmm-add-classes
  '((jsx
