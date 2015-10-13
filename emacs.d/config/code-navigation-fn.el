@@ -43,3 +43,7 @@
   (find-file-at-point)
   (if (not (equal line-num 0))
       (forward-line line-num)))
+
+(defun td/current-buffer-extension()
+  (when (buffer-file-name)
+    (file-name-extension (buffer-file-name))))
