@@ -47,6 +47,8 @@
 (global-set-key "\C-m" 'newline-and-indent)
 
 ;; SUPPER COMMANDS
+(global-set-key (kbd "<C-s-268632070>") 'toggle-frame-fullscreen)
+
 (global-set-key (kbd "s-b") 'helm-buffers-list)
 (global-set-key (kbd "s-t") 'projectile-find-file)
 (global-set-key (kbd "s-F") 'helm-git-grep-at-point)
