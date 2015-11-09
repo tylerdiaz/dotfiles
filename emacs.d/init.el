@@ -97,7 +97,7 @@
 (custom-set-variables '(coffee-tab-width 2))
 
 ;; Smart mode line
-(setq sml/theme 'light)
+(setq sml/theme 'dark)
 
 ;; Terse yes/no
 (fset 'yes-or-no-p 'y-or-n-p)
@@ -215,6 +215,7 @@ This functions should be added to the hooks of major modes for programming."
 
 (add-hook 'after-init-hook 'inf-ruby-switch-setup)
 (add-hook 'ruby-mode-common-hook 'font-lock-comment-annotations)
+
 (setq compilation-scroll-output t)
 
 ;; recompile init file after save

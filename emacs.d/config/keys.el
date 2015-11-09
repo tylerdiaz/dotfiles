@@ -1,7 +1,7 @@
 ;; Key chords!
 (key-chord-mode 1)
 (key-chord-define-global "jj" 'avy-goto-word-or-subword-1)
-(key-chord-define-global "nn" 'yas-new-snippet)
+(key-chord-define-global "zz" 'yas-new-snippet)
 
 (global-set-key "\C-m" 'newline-and-indent)
 (global-set-key (kbd "s-.") 'avy-goto-word-or-subword-1)

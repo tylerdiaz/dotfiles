@@ -30,5 +30,3 @@
 (setq org-agenda-include-all-todo t)
 (setq org-startup-indented t)
 ;; (setq org-replace-disputed-keys t)
-
-(add-hook 'after-init-hook '(lambda () (org-todo-list)))
