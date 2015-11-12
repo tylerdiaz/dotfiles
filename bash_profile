@@ -1,9 +1,6 @@
-export EDITOR=emacs
+export EDITOR=emacsclient
 export PATH=/usr/local/bin:$PATH
 export HISTSIZE="" #infinite history!
-
-# The best editor
-alias emacs=ec
 
 # Marking directories for quick navigation
 export MARKPATH=$HOME/.marks
