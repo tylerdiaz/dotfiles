@@ -1,4 +1,4 @@
-export EDITOR=subl
+export EDITOR=emacs
 export PATH=/usr/local/bin:$PATH
 export HISTSIZE="" #infinite history!
 
