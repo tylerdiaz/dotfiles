@@ -191,6 +191,14 @@ This functions should be added to the hooks of major modes for programming."
 (setq mmm-global-mode 'maybe)
 (mmm-add-mode-ext-class 'coffee-mode "\\.cjsx\\'" 'jsx)
 
+(add-to-list 'auto-mode-alist '("\\.jsx\\'" . jsx-mode))
+(add-to-list 'auto-mode-alist '("\\.jsx$" . web-mode))
+(defadvice web-mode-highlight-part (around tweak-jsx activate)
+  (if (equal web-mode-content-type "jsx")
+      (let ((web-mode-enable-part-face nil))
+        ad-do-it)
+    ad-do-it))
+
 ;; Web mode for editing PHP, HTML, CSS, some JS, ERB
 (require 'web-mode)
 (setq web-mode-markup-indent-offset 2)
@@ -205,6 +213,7 @@ This functions should be added to the hooks of major modes for programming."
 
 ;; More serious editing of JS
 (setq-default js2-basic-offset 2)
+(setq js-indent-level 2)
 (custom-set-variables
  '(js2-basic-offset 2)
  '(js2-bounce-indent-p -1)
