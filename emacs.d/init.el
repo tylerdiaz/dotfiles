@@ -251,6 +251,9 @@ This functions should be added to the hooks of major modes for programming."
 (load "~/.emacs.d/config/org.el")
 (load "~/.emacs.d/config/keys.el")
 
+;; start the emacsserver that listens to emacsclient
+(server-start)
+
 ;; https://github.com/purcell/exec-path-from-shell
 ;; only need exec-path-from-shell on OSX
 ;; this hopefully sets up path and other vars better
