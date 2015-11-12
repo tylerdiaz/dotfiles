@@ -34,8 +34,8 @@ alias gcm="git checkout develop"
 alias grom="git rebase origin/develop"
 
 # Git auto completion
-if [ -f `brew --prefix`/etc/bash_completion ]; then
-    . `brew --prefix`/etc/bash_completion
+if [ -f ~/.git-completion.bash ]; then
+  . ~/.git-completion.bash
 fi
 
 # GitHUB stuff
