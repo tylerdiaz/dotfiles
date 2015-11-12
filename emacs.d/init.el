@@ -191,7 +191,6 @@ This functions should be added to the hooks of major modes for programming."
 (setq mmm-global-mode 'maybe)
 (mmm-add-mode-ext-class 'coffee-mode "\\.cjsx\\'" 'jsx)
 
-(add-to-list 'auto-mode-alist '("\\.jsx\\'" . jsx-mode))
 (add-to-list 'auto-mode-alist '("\\.jsx$" . web-mode))
 (defadvice web-mode-highlight-part (around tweak-jsx activate)
   (if (equal web-mode-content-type "jsx")
@@ -211,6 +210,11 @@ This functions should be added to the hooks of major modes for programming."
   ("beg" "end")))
 ))
 
+;; Checking stuff on-the-fly
+(require 'flycheck)
+(add-hook 'after-init-hook #'global-flycheck-mode)
+(setq flycheck-checkers '(javascript-eslint))
+
 ;; More serious editing of JS
 (setq-default js2-basic-offset 2)
 (setq js-indent-level 2)
@@ -218,6 +222,20 @@ This functions should be added to the hooks of major modes for programming."
  '(js2-basic-offset 2)
  '(js2-bounce-indent-p -1)
 )
+
+(setq-default flycheck-disabled-checkers
+              (append flycheck-disabled-checkers
+                      '(javascript-jshint)))
+
+;; use eslint with web-mode for jsx files
+(flycheck-add-mode 'javascript-eslint 'web-mode)
+(flycheck-add-mode 'javascript-eslint 'js2-mode)
+(flycheck-add-mode 'javascript-eslint 'js-mode)
+
+;; disable json-jsonlist checking for json files
+(setq-default flycheck-disabled-checkers
+              (append flycheck-disabled-checkers
+                      '(json-jsonlist)))
 
 ; Auto indentation
 (add-hook 'ruby-mode-hook #'aggressive-indent-mode)
@@ -232,5 +250,11 @@ This functions should be added to the hooks of major modes for programming."
 
 (load "~/.emacs.d/config/org.el")
 (load "~/.emacs.d/config/keys.el")
+
+;; https://github.com/purcell/exec-path-from-shell
+;; only need exec-path-from-shell on OSX
+;; this hopefully sets up path and other vars better
+(when (memq window-system '(mac ns))
+  (exec-path-from-shell-initialize))
 
 ;;; init.el ends here
