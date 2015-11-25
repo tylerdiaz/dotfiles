@@ -32,6 +32,8 @@ parse_git_branch() {
 alias gir="git rebase -i origin/master"
 alias gcm="git checkout master"
 alias grom="git fetch && git rebase origin/master"
+alias g-="git checkout @{-1}"
+alias g--="git checkout @{-2}"
 
 # Git auto completion
 if [ -f ~/.git-completion.bash ]; then
