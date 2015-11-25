@@ -241,6 +241,13 @@ This functions should be added to the hooks of major modes for programming."
 (flycheck-add-mode 'javascript-eslint 'js2-mode)
 (flycheck-add-mode 'javascript-eslint 'js-mode)
 
+;; use tern for JS auto completion
+(add-hook 'js-mode-hook (lambda () (tern-mode t)))
+(eval-after-load 'tern
+  '(progn
+     (require 'tern-auto-complete)
+     (tern-ac-setup)))
+
 ;; disable json-jsonlist checking for json files
 (setq-default flycheck-disabled-checkers
               (append flycheck-disabled-checkers
