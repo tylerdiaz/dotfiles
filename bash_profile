@@ -29,9 +29,9 @@ parse_git_branch() {
 }
 
 # Git shortcuts
-alias gir="git rebase -i origin/develop"
-alias gcm="git checkout develop"
-alias grom="git rebase origin/develop"
+alias gir="git rebase -i origin/master"
+alias gcm="git checkout master"
+alias grom="git fetch && git rebase origin/master"
 
 # Git auto completion
 if [ -f ~/.git-completion.bash ]; then
