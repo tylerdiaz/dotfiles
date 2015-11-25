@@ -46,6 +46,13 @@
 (global-set-key [remap forward-line] 'goto-line-with-feedback)
 (global-set-key "\C-m" 'newline-and-indent)
 
+(defun td/insert-camel-buffer-name ()
+  (interactive)
+  (insert
+    (string-inflection-camelcase-function
+      (replace-regexp-in-string "-" "_"
+        (substring (car (last (split-string buffer-file-name "/"))) 0 -4)))))
+
 ;; SUPPER COMMANDS
 (global-set-key (kbd "<C-s-268632070>") 'toggle-frame-fullscreen)
 
