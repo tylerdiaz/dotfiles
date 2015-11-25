@@ -146,6 +146,9 @@
 
 (setq magit-diff-refine-hunk 'all)
 (setq magit-push-always-verify nil)
+(setq magit-branch-arguments nil)
+(setq magit-push-arguments '("--set-upstream"))
+
 (add-to-list 'magit-no-confirm 'stage-all-changes)
 (defun magit-key-mode--add-default-options (arguments)
   (if (eq (car arguments) 'pulling)
