@@ -78,6 +78,9 @@
 (setq-default save-place t)
 (setq save-place-file (expand-file-name ".places" user-emacs-directory))
 
+;; Off with these training wheels
+(setq guru-warn-only nil)
+
 ;; Functions to modify text
 (load "~/.emacs.d/config/text-manipulation-fn.el")
 
