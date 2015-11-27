@@ -67,6 +67,9 @@
                    (when (buffer-file-name b) (buffer-name b)))
                  (buffer-list)))))
 
+;; C-SPC after C-U C-SPC to keep moving through mark ring
+(setq set-mark-command-repeat-pop t)
+
 ;; Projectile!
 (projectile-global-mode)
 
