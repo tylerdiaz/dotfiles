@@ -9,7 +9,7 @@
 [core]
   autocrlf = input
   attributesfile = /Users/tylerdiaz/.gitattributes
-	excludesfile = /Users/tylerdiaz/.gitignore_global
+  excludesfile = /Users/tylerdiaz/.gitignore_global
   editor = emacs
 [color]
   ui = true
@@ -25,7 +25,7 @@
 [branch]
   autosetuprebase = always
 [color "diff"]
-	whitespace = red reverse
+  whitespace = red reverse
 [push]
   default = current
 [status]
