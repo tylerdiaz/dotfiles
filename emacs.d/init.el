@@ -26,6 +26,9 @@
 ;; Helpful frame title
 (setq frame-title-format '((buffer-file-name "%f" (dired-directory dired-directory "%b"))" - %m mode (emacs " emacs-version ")"))
 
+;; Trim trailing spaces
+(add-hook 'before-save-hook 'delete-trailing-whitespace)
+
 ;; File mode aliases
 (add-to-list 'auto-mode-alist '("\\.json$" . js-mode))
 (add-to-list 'auto-mode-alist '("\\.cjsx$" . coffee-mode))
@@ -77,9 +80,6 @@
 (require 'saveplace)
 (setq-default save-place t)
 (setq save-place-file (expand-file-name ".places" user-emacs-directory))
-
-;; Off with these training wheels
-(setq guru-warn-only nil)
 
 ;; Functions to modify text
 (load "~/.emacs.d/config/text-manipulation-fn.el")
@@ -265,5 +265,18 @@ This functions should be added to the hooks of major modes for programming."
 ;; this hopefully sets up path and other vars better
 (when (memq window-system '(mac ns))
   (exec-path-from-shell-initialize))
+
+(defun save-macro (name)
+  "save a Macro. Take a name as argument
+     and save the last defined macro under
+     this name at the end of your .emacs"
+  (interactive "SName of the macro :")  ; ask for the name of the macro
+  (kmacro-name-last-macro name)         ; use this name for the macro
+  (find-file user-init-file)            ; open ~/.emacs or other user init file
+  (goto-char (point-max))               ; go to the end of the .emacs
+  (newline)                             ; insert a newline
+  (insert-kbd-macro name)               ; copy the macro
+  (newline)                             ; insert a newline
+  (switch-to-buffer nil))               ; return to the initial buffer
 
 ;;; init.el ends here
