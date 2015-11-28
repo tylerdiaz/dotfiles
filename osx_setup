@@ -4,6 +4,61 @@ sudo -v
 # Keep-alive: update existing `sudo` time stamp until `.osx` has finished
 while true; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2>/dev/null &
 
+# Check for Homebrew,
+# Install if we don't have it
+if test ! $(which brew); then
+  echo "Installing homebrew..."
+  ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+fi
+
+# Update homebrew recipes
+echo "Updating homebrew..."
+brew update 2>/dev/null
+
+# Install GNU core utilities (those that come with OS X are outdated)
+brew install coreutils 2>/dev/null
+
+# Install GNU `find`, `locate`, `updatedb`, and `xargs`, g-prefixed
+brew install findutils 2>/dev/null
+
+# Install Bash 4
+brew install bash 2>/dev/null
+
+# Install more recent versions of some OS X tools
+brew tap homebrew/dupes 2>/dev/null
+brew install homebrew/dupes/grep 2>/dev/null
+
+binaries=(
+  git
+  node
+)
+
+echo "Installing brew binaries..."
+brew install ${binaries[@]}
+
+brew install caskroom/cask/brew-cask 2>/dev/null
+
+# Apps
+apps=(
+  flux
+  google-chrome
+  quicklook-csv
+  quicklook-json
+  slack
+  spotify
+)
+
+# Install apps to /Applications
+# Default is: /Users/$user/Applications
+echo "Installing apps via brew cask..."
+brew cask install --appdir="/Applications" ${apps[@]} 2>/dev/null
+
+# Cleanup brew
+echo "Cleaning up brew..."
+brew cleanup 2>/dev/null
+
+### System config time
+
 # Restart automatically if the computer freezes
 sudo systemsetup -setrestartfreeze on
 
