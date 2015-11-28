@@ -9,6 +9,8 @@
 [core]
   autocrlf = input
   attributesfile = /Users/tylerdiaz/.gitattributes
+	excludesfile = /Users/tylerdiaz/.gitignore_global
+  editor = emacs
 [color]
   ui = true
   diff = auto
@@ -20,6 +22,12 @@
   gr = grep -n
   s = status
   tree = log --graph --decorate --pretty=oneline --abbrev-commit
+[branch]
+  autosetuprebase = always
+[color "diff"]
+	whitespace = red reverse
+[push]
+  default = current
 [status]
   showUntrackedFiles = all
 [credential]
