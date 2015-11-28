@@ -34,7 +34,9 @@ brew install homebrew/dupes/grep 2>/dev/null
 
 binaries=(
   ack
+  cask
   homebrew/versions/bash-completion2
+  colordiff
   git
   node
   imagemagick
@@ -58,7 +60,14 @@ apps=(
   quicklook-csv
   quicklook-json
   slack
+  iTerm2
+  emacs
   spotify
+  seil
+  wacom-tablet
+  slate
+  karabiner
+  github
 )
 
 # Install apps to /Applications
@@ -69,6 +78,9 @@ brew cask install --appdir="/Applications" ${apps[@]} 2>/dev/null
 # Cleanup brew
 echo "Cleaning up brew..."
 brew cleanup 2>/dev/null
+
+## Install RVM
+curl -L https://get.rvm.io | bash -s stable --auto-dotfiles --autolibs=enable --rails
 
 ### System config time
 
