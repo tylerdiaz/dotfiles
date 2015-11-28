@@ -33,6 +33,11 @@ brew install homebrew/dupes/grep 2>/dev/null
 binaries=(
   git
   node
+  imagemagick
+  postgresql
+  mongodb
+  redis
+  sqlite
 )
 
 echo "Installing brew binaries..."
