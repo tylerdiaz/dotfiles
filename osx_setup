@@ -52,6 +52,9 @@ binaries=(
 echo "Installing brew binaries..."
 brew install ${binaries[@]}
 
+# Mostly for emacs
+brew install aspell --with-lang=en
+
 brew install caskroom/cask/brew-cask 2>/dev/null
 
 # Apps
