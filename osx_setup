@@ -46,6 +46,7 @@ binaries=(
   redis
   sqlite
   tree
+  youtube-dl
 )
 
 echo "Installing brew binaries..."
