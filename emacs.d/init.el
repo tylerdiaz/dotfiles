@@ -102,6 +102,9 @@
 (setq whitespace-action '(auto-cleanup))
 (custom-set-variables '(coffee-tab-width 2))
 
+;; Facilitate variable renaming
+(smartscan-mode 1)
+
 ;; Smart mode line
 (setq sml/theme 'dark)
 
