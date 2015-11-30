@@ -23,6 +23,10 @@
 (global-set-key (kbd "C-c C-r") 'remember)
 (global-set-key (kbd "C-c a") 'org-agenda)
 
+;; Move between buffers like Chrome tabs
+(global-set-key (kbd "s-{") 'previous-buffer)
+(global-set-key (kbd "s-}") 'next-buffer)
+
 ;; don't prompt when finding a tag
 (global-set-key (kbd "M-.") 'sm-find-tag-other-window)
 
