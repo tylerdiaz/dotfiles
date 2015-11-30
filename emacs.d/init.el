@@ -229,6 +229,10 @@ This functions should be added to the hooks of major modes for programming."
 (setq flycheck-checkers '(javascript-eslint ruby-rubocop))
 (with-eval-after-load 'flycheck (flycheck-pos-tip-mode)
 
+;; Add support for ascii emojis
+(add-hook 'after-init-hook #'global-emojify-mode)
+(emoji-fontset-enable "Symbola")
+
 ;; More serious editing of JS
 (setq-default js2-basic-offset 2)
 (setq js-indent-level 2)
