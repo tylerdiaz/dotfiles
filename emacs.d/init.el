@@ -226,6 +226,7 @@ This functions should be added to the hooks of major modes for programming."
 (require 'flycheck)
 (add-hook 'after-init-hook #'global-flycheck-mode)
 (setq flycheck-checkers '(javascript-eslint ruby-rubocop))
+(with-eval-after-load 'flycheck (flycheck-pos-tip-mode)
 
 ;; More serious editing of JS
 (setq-default js2-basic-offset 2)
