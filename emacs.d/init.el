@@ -20,6 +20,16 @@
 (setq-default indent-tabs-mode nil)
 (setq-default tab-width 2)
 
+(defun td/web-mode-hook ()
+  (setq web-mode-comment-style 2)
+  (setq web-mode-markup-indent-offset 2)
+  (setq web-mode-css-indent-offset 2)
+  (setq web-mode-code-indent-offset 2)
+  (setq web-mode-indent-style 2)
+  (setq web-mode-attr-indent-offset 2))
+
+(add-hook 'web-mode-hook  'td/web-mode-hook)
+
 ;; Make backups of files, even when they're in version control
 (setq vc-make-backup-files t)
 
@@ -203,12 +213,8 @@ This functions should be added to the hooks of major modes for programming."
 (setq mmm-global-mode 'maybe)
 (mmm-add-mode-ext-class 'coffee-mode "\\.cjsx\\'" 'jsx)
 
-(add-to-list 'auto-mode-alist '("\\.jsx$" . web-mode))
-(defadvice web-mode-highlight-part (around tweak-jsx activate)
-  (if (equal web-mode-content-type "jsx")
-      (let ((web-mode-enable-part-face nil))
-        ad-do-it)
-    ad-do-it))
+(setq web-mode-content-types-alist
+      '(("jsx" . "\\.js[x]?\\'")))
 
 ;; Web mode for editing PHP, HTML, CSS, some JS, ERB
 (require 'web-mode)
