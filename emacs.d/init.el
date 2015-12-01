@@ -213,8 +213,7 @@ This functions should be added to the hooks of major modes for programming."
 (setq mmm-global-mode 'maybe)
 (mmm-add-mode-ext-class 'coffee-mode "\\.cjsx\\'" 'jsx)
 
-(setq web-mode-content-types-alist
-      '(("jsx" . "\\.js[x]?\\'")))
+(add-to-list 'auto-mode-alist '("\\.jsx$" . web-mode))
 
 ;; Web mode for editing PHP, HTML, CSS, some JS, ERB
 (require 'web-mode)
