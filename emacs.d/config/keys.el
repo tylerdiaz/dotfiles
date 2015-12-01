@@ -55,7 +55,7 @@
 (defun td/insert-camel-buffer-name ()
   (interactive)
   (insert
-    (string-inflection-camelcase-function
+    (string-inflection-camelcase
       (replace-regexp-in-string "-" "_"
         (substring (car (last (split-string buffer-file-name "/"))) 0 -4)))))
 
