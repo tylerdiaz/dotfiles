@@ -233,7 +233,6 @@ This functions should be added to the hooks of major modes for programming."
 (add-hook 'after-init-hook #'global-flycheck-mode)
 (flycheck-add-mode 'javascript-eslint 'web-mode)
 (setq flycheck-checkers '(javascript-eslint ruby-rubocop))
-(with-eval-after-load 'flycheck (flycheck-pos-tip-mode)
 
 ;; Add support for ascii emojis
 (add-hook 'after-init-hook #'global-emojify-mode)
