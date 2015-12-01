@@ -23,6 +23,8 @@
 (global-set-key (kbd "C-c C-r") 'remember)
 (global-set-key (kbd "C-c a") 'org-agenda)
 
+(global-set-key (kbd "C-\'") 'sp-rewrap-sexp)
+
 ;; Move between buffers like Chrome tabs
 (global-set-key (kbd "s-{") 'previous-buffer)
 (global-set-key (kbd "s-}") 'next-buffer)
