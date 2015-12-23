@@ -62,7 +62,7 @@
 (require 'helm)
 (require 'helm-config)
 (require 'prelude-helm-everywhere)
-(setq projectile-enable-caching t)
+;; (setq projectile-enable-caching f)
 (helm-mode 1)
 (setq helm-split-window-in-side-p           t ; open helm buffer inside current window, not occupy whole other window
       helm-move-to-line-cycle-in-source     t ; move to end or beginning of source when reaching top or bottom of source.
