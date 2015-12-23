@@ -9,7 +9,7 @@
 [core]
   autocrlf = input
   attributesfile = /Users/tylerdiaz/.gitattributes
-  excludesfile = /Users/tylerdiaz/.gitignore_global
+	excludesfile = /Users/tylerdiaz/.gitignore
   editor = emacs
 [color]
   ui = true

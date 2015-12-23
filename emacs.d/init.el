@@ -55,10 +55,14 @@
 (add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/"))
 (package-initialize)
 
+;; String inflection bonuses
+(require 'string-inflection)
+
 ;; Helm
 (require 'helm)
 (require 'helm-config)
 (require 'prelude-helm-everywhere)
+(setq projectile-enable-caching t)
 (helm-mode 1)
 (setq helm-split-window-in-side-p           t ; open helm buffer inside current window, not occupy whole other window
       helm-move-to-line-cycle-in-source     t ; move to end or beginning of source when reaching top or bottom of source.
@@ -70,6 +74,14 @@
   '(setq helm-source-moccur
          (helm-make-source "Moccur"
              'helm-source-multi-occur :follow 1)))
+
+(with-eval-after-load 'helm-projectile
+(defvar helm-source-file-not-found
+  (helm-build-dummy-source
+      "Create file"
+    :action (lambda (cand) (find-file cand))))
+
+(add-to-list 'helm-projectile-sources-list helm-source-file-not-found t))
 
 (defun my-helm-multi-all ()
   "multi-occur in all buffers backed by files."
@@ -162,6 +174,9 @@
 (setq magit-branch-arguments nil)
 (setq magit-push-arguments '("--set-upstream"))
 
+;; I tend to keep a magit window open somewhere and prefer to see it update live
+(add-hook 'after-save-hook 'magit-after-save-refresh-status)
+
 (add-to-list 'magit-no-confirm 'stage-all-changes)
 (defun magit-key-mode--add-default-options (arguments)
   (if (eq (car arguments) 'pulling)
@@ -175,6 +190,7 @@
 (setq yas-snippet-dirs '("~/.emacs.d/snippets"))
 (setq yas-global-mode t)
 (setq yas-indent-mode 'auto)
+(yas-reload-all) ;; always want up-to-date snippets
 
 (add-hook 'web-mode-hook #'yas-minor-mode)
 (add-hook 'coffee-mode-hook #'yas-minor-mode)
@@ -213,7 +229,7 @@ This functions should be added to the hooks of major modes for programming."
 (setq mmm-global-mode 'maybe)
 (mmm-add-mode-ext-class 'coffee-mode "\\.cjsx\\'" 'jsx)
 
-(add-to-list 'auto-mode-alist '("\\.jsx$" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.jsx?$" . web-mode))
 
 ;; Web mode for editing PHP, HTML, CSS, some JS, ERB
 (require 'web-mode)
@@ -277,6 +293,22 @@ This functions should be added to the hooks of major modes for programming."
 ;; recompile init file after save
 (byte-recompile-file "init.el")
 
+;; source: http://steve.yegge.googlepages.com/my-dot-emacs-file
+(defun rename-file-and-buffer (new-name)
+  "Renames both current buffer and file it's visiting to NEW-NAME."
+  (interactive "sNew name: ")
+  (let ((name (buffer-name))
+        (filename (buffer-file-name)))
+    (if (not filename)
+        (message "Buffer '%s' is not visiting a file!" name)
+      (if (get-buffer new-name)
+          (message "A buffer named '%s' already exists!" new-name)
+        (progn
+          (rename-file name new-name 1)
+          (rename-buffer new-name)
+          (set-visited-file-name new-name)
+          (set-buffer-modified-p nil))))))
+
 (load "~/.emacs.d/config/org.el")
 (load "~/.emacs.d/config/keys.el")
 
@@ -302,4 +334,16 @@ This functions should be added to the hooks of major modes for programming."
   (newline)                             ; insert a newline
   (switch-to-buffer nil))               ; return to the initial buffer
 
+(fset 'td/scss-add-colon-spaces
+   (lambda (&optional arg) "Keyboard macro." (interactive "p") (kmacro-exec-ring-item (quote ([134217765 58 return 58 32 return 33 134217788 134217765 58 32 32 return 58 32 return 33] 0 "%d")) arg)))
+
+(fset 'td/convert-next-snake-instance-to-camel
+   (lambda (&optional arg) "Keyboard macro." (interactive "p") (kmacro-exec-ring-item (quote ([134217788 19 95 return 134217848 108 111 119 101 114 45 99 97 109 101 108 return] 0 "%d")) arg)))
+
 ;;; init.el ends here
+
+(fset 'td/countr/convert-prop-to-proxy
+   (lambda (&optional arg) "Keyboard macro." (interactive "p") (kmacro-exec-ring-item (quote ([19 125 return left 41943072 8388707 18 114 101 110 100 101 114 return up] 0 "%d")) arg)))
+
+(fset 'td/countr/convert_fn_to_lodash_partial
+   (lambda (&optional arg) "Keyboard macro." (interactive "p") (kmacro-exec-ring-item (quote ([18 123 return right 95 46 112 97 114 116 105 97 108 40 kp-delete 19 40 return backspace 32 44 backspace backspace 44 32 19 41 return] 0 "%d")) arg)))

@@ -5,7 +5,7 @@
 
 (global-set-key "\C-m" 'newline-and-indent)
 (global-set-key (kbd "s-.") 'avy-goto-word-or-subword-1)
-(global-set-key (kbd "s-`") 'ace-window)
+(global-set-key (kbd "s-`") 'string-inflection-all-cycle)
 (global-set-key (kbd "s-W") 'kill-some-buffers)
 (global-set-key (kbd "s-w") 'kill-this-buffer)
 
@@ -18,7 +18,7 @@
 (global-set-key (kbd "C->") 'mc/mark-next-like-this)
 (global-set-key (kbd "C-<") 'mc/mark-previous-like-this)
 (global-set-key (kbd "C-c C-<") 'mc/mark-all-like-this-dwim)
-(global-set-key (kbd "C-x C-r") 'rename-current-buffer-file)
+(global-set-key (kbd "C-x C-r") 'rename-file-and-buffer)
 (global-set-key (kbd "C-c C-k") 'copy-line)
 (global-set-key (kbd "C-c C-r") 'remember)
 (global-set-key (kbd "C-c a") 'org-agenda)
@@ -28,6 +28,8 @@
 ;; Move between buffers like Chrome tabs
 (global-set-key (kbd "s-{") 'previous-buffer)
 (global-set-key (kbd "s-}") 'next-buffer)
+
+(global-set-key (kbd "§") 'helm-M-x)
 
 ;; don't prompt when finding a tag
 (global-set-key (kbd "M-.") 'sm-find-tag-other-window)
@@ -47,21 +49,36 @@
 (global-set-key (kbd "<C-S-up>") 'move-line-up)
 (global-set-key (kbd "C-x /") 'comment-or-uncomment-region-or-line)
 (global-set-key (kbd "s-SPC") 'er/expand-region)
-(global-set-key (kbd "<delete>") 'delete-char)
-(global-set-key (kbd "C-d") 'duplicate-line)
 (global-set-key [remap forward-line] 'goto-line-with-feedback)
 (global-set-key "\C-m" 'newline-and-indent)
+(global-set-key "\C-m" 'newline-and-indent)
 
-(defun td/insert-camel-buffer-name ()
+(defun td/insert-camel-buffer-name (&optional lowerCased)
   (interactive)
   (insert
-    (string-inflection-camelcase
-      (replace-regexp-in-string "-" "_"
-        (substring (car (last (split-string buffer-file-name "/"))) 0 -4)))))
+   (string-inflection-camelcase-function
+    (replace-regexp-in-string
+     "-" "_"
+     (car
+      (last
+       (split-string
+        (file-name-sans-extension buffer-file-name) "/")))))))
+
+(defun td/insert-lower-camel-buffer-name (&optional lowerCased)
+  (interactive)
+  (insert
+    (string-inflection-lower-camelcase-function
+     (replace-regexp-in-string
+      "-" "_"
+      (car
+       (last
+        (split-string
+         (file-name-sans-extension buffer-file-name) "/")))))))
 
 ;; SUPPER COMMANDS
 (global-set-key (kbd "<C-s-268632070>") 'toggle-frame-fullscreen)
 
 (global-set-key (kbd "s-b") 'helm-buffers-list)
-(global-set-key (kbd "s-t") 'projectile-find-file)
+(global-set-key (kbd "s-t") 'helm-projectile-find-file)
 (global-set-key (kbd "s-F") 'helm-git-grep-at-point)
+(global-set-key (kbd "s-r") 'helm-recentf)
