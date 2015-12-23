@@ -4,6 +4,7 @@ There's a separate [snippets repository](https://github.com/tylerdiaz/snippets) 
 
 To setup: 
 ```bash
+cd ~
 git clone https://github.com/tylerdiaz/dotfiles
 rcup -d dotfiles -x README.md
 cd dotfiles
