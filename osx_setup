@@ -42,6 +42,7 @@ binaries=(
   imagemagick
   postgresql
   mongodb
+  entr # Run arbitrary commands when files change
   moreutils
   redis
   sqlite
