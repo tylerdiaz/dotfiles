@@ -12,7 +12,7 @@ source ./osx_setup
 ```
 
 Some handy snippets:
-#### To get a list of activated packages on Emacs run `M-:` and paste:
+* To get a list of activated packages on Emacs run `M-:` and paste:
 ```elisp
 (insert (format "%s" (delq nil (delete-dups package-activated-list))))
 ```
