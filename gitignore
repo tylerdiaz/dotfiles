@@ -39,3 +39,6 @@ tramp
 
 # idutils
 ID
+
+# JS stuff
+npm-debug.log
