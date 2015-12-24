@@ -1,191 +1,207 @@
-(setq my-package-list '
+(setq tylers-package-list '
       (
-       emoji-fontset
-       emojify
-       ht
-       seq
-       ac-etags
-       auto-complete
-       popup
-       aggressive-indent
-       alert
-       log4e
-       gntp
-       anything
-       anzu
-       async
-       avy
-       avy-zap
-       cider
-       spinner
-       queue
-       pkg-info
-       epl
-       clojure-mode
-       circe
-       clj-refactor
-       hydra
-       inflections
-       edn
-       s
-       peg
-       dash
-       multiple-cursors
-       paredit
-       yasnippet
-       coffee-mode
-       color-theme-sanityinc-tomorrow
-       company
-       diff-hl
-       diminish
-       dired+
-       easy-kill
-       elixir-mode
-       emmet-mode
-       enh-ruby-mode
-       exec-path-from-shell
-       f
-       flx
-       flx-ido
-       flycheck
-       let-alist
-       geiser
-       gh
-       logito
-       pcache
-       git-commit
-       with-editor
-       grizzl
-       guru-mode
-       helm
-       helm-core
-       helm-ag
-       helm-descbinds
-       helm-gtags
-       helm-projectile
-       projectile
-       helm-robe
-       hungry-delete
-       ido-completing-read+
-       ido-ubiquitous
-       inf-ruby
-       js2-mode
-       js2-refactor
-       json-mode
-       json-snatcher
-       json-reformat
-       key-chord
-       leuven-theme
-       magit
-       magit-popup
-       markdown-mode
-       names
-       org
-       polymode
-       projectile-rails
-       rake
-       rich-minority
-       robe
-       rspec-mode
-       rubocop
-       ruby-refactor
-       ruby-tools
-       smart-mode-line
-       smart-mode-line-powerline-theme
-       powerline
-       smartparens
-       smex
-       solarized-theme
-       tern
-       tern-auto-complete
-       tree-mode
-       web-mode
-       which-key
-       yaml-mode
-       zenburn-theme
-       emoji-display
        4clojure
-       request
        ac-emmet
+       ac-etags
+       ac-slime
        ace-jump-buffer
        ace-jump-mode
        ace-window
+       aggressive-indent
+       alert
+       anything
        anything-exuberant-ctags
+       anzu
+       async
+       auto-complete
        auto-complete-exuberant-ctags
        auto-highlight-symbol
+       avy
+       avy-zap
        back-button
-       persistent-soft
-       list-utils
-       ucs-utils
-       smartrep
-       nav-flash
        browse-kill-ring
        chronos
+       cider
+       circe
+       clj-refactor
+       clojure-mode
        clojure-snippets
-       color-theme-solarized
+       coffee-mode
        color-theme
+       color-theme-sanityinc-tomorrow
+       color-theme-solarized
+       company
        ctags
-       dired-details+
+       dash
+       deferred
+       diff-hl
+       diminish
+       dired+
        dired-details
+       dired-details+
        dired-efap
        dirtree
-       windata
-       discover-clj-refactor
        discover
-       makey
+       discover-clj-refactor
        discover-my-major
+       easy-kill
        ecb
-       edit-server-htmlize
        edit-server
+       edit-server-htmlize
+       edn
        elisp-slime-nav
+       elixir-mode
+       emmet-mode
+       emoji-display
+       emoji-fontset
+       emojify
+       enh-ruby-mode
+       epl
        eshell-did-you-mean
        eshell-prompt-extras
+       exec-path-from-shell
        expand-region
+       f
        fancy-battery
-       flymake-ruby
+       flx
+       flx-ido
+       flycheck
+       flycheck-pos-tip
+       flycheck-status-emoji
+       flycheck-tip
+       flymake-coffee
        flymake-easy
+       flymake-ruby
+       font-utils
+       geiser
+       gh
        gist
+       git-commit
        git-messenger
        git-timemachine
        gitconfig-mode
        gitignore-mode
+       gntp
        god-mode
+       grizzl
+       guru-mode
        hackernews
+       helm
+       helm-ag
+       helm-core
+       helm-descbinds
        helm-emmet
        helm-git-grep
+       helm-gtags
+       helm-projectile
+       helm-robe
+       ht
+       hungry-delete
        hyde
+       hydra
+       ido-completing-read+
+       ido-ubiquitous
+       inf-ruby
+       inflections
+       js2-highlight-vars
+       js2-mode
+       js2-refactor
+       json-mode
+       json-reformat
+       json-snatcher
        jsx-mode
+       key-chord
        kibit-helper
+       let-alist
+       leuven-theme
+       list-utils
+       log4e
+       logito
+       magit
+       magit-popup
+       makey
+       markdown-mode
+       markdown-mode+
        mmm-mode
        move-text
+       multiple-cursors
+       names
+       nav-flash
        noctilux-theme
+       noflet
        operate-on-number
+       org
        org-gcal
-       request-deferred
-       deferred
        ov
+       paredit
+       pcache
+       peg
+       persistent-soft
        php-mode
+       pivotal-tracker
+       pkg-info
+       polymode
+       popup
+       pos-tip
+       powerline
        prodigy
+       projectile
+       projectile-rails
        projectile-speedbar
+       queue
        rainbow-delimiters
        rainbow-mode
+       rake
+       request
+       request-deferred
+       rich-minority
+       robe
+       rspec-mode
+       rubocop
        ruby-additional
        ruby-electric
        ruby-hash-syntax
+       ruby-refactor
+       ruby-tools
+       s
        s-buffer
-       noflet
        scss-mode
+       seq
+       slime
+       smart-mode-line
+       smart-mode-line-powerline-theme
+       smartparens
+       smartrep
        smartscan
+       smex
+       solarized-theme
+       spinner
        sr-speedbar
        string-inflection
+       stylus-mode
        sublime-themes
+       sws-mode
+       tern
+       tern-auto-complete
        thesaurus
+       tree-mode
+       ucs-utils
        undo-tree
+       unicode-emoticons
+       unicode-fonts
        vkill
        volatile-highlights
        w3
+       web-mode
+       which-key
+       windata
        wisp-mode
        wispjs-mode
-       zop-to-char))
+       with-editor
+       yaml-mode
+       yasnippet
+       zenburn-theme
+       zop-to-char
+       ))
 
-(mapc #'package-install my-package-list)
+(mapc #'package-install tylers-package-list)
