@@ -3,6 +3,12 @@
 (scroll-bar-mode 0)
 ; (desktop-save-mode 1)
 
+;; Melpa
+(require 'package)
+(add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/"))
+(package-initialize)
+(load "~/.emacs.d/melpa-config.el")
+
 ;; Emacs from command line
 (x-focus-frame nil)
 
@@ -49,11 +55,6 @@
 
 ;; Mac stuff
 (setq ns-function-modifier 'hyper)
-
-;; Melpa
-(require 'package)
-(add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/"))
-(package-initialize)
 
 ;; String inflection bonuses
 (require 'string-inflection)
