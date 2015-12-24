@@ -7,7 +7,7 @@
 (require 'package)
 (add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/"))
 (package-initialize)
-(load "~/.emacs.d/melpa-config.el")
+(load "~/.emacs.d/melpa-setup.el")
 
 ;; Emacs from command line
 (x-focus-frame nil)
