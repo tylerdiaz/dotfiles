@@ -60,7 +60,6 @@
  '(org-agenda-files
    (quote
     ("~/Desktop/ZipPay/organizer.org" "~/notebooks/personal/organizer.org")))
- '(pivotal-api-token "14d2367d541c601f98c69dd1989ab15b")
  '(pos-tip-background-color "#073642")
  '(pos-tip-foreground-color "#93a1a1")
  '(safe-local-variable-values
