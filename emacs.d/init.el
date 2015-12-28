@@ -25,6 +25,7 @@
 (setq ns-use-srgb-colorspace 't)
 (setq-default indent-tabs-mode nil)
 (setq-default tab-width 2)
+(set-default 'truncate-lines t)
 
 (defun td/web-mode-hook ()
   (setq web-mode-comment-style 2)
