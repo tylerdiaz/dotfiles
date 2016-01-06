@@ -53,6 +53,10 @@
 (global-set-key "\C-m" 'newline-and-indent)
 (global-set-key "\C-m" 'newline-and-indent)
 
+;; Utilize mark ring
+(global-set-key (kbd "<M-down>") 'pop-global-mark)
+(global-set-key (kbd "<M-up>") 'helm-mark-ring)
+
 (defun td/insert-camel-buffer-name (&optional lowerCased)
   (interactive)
   (insert
