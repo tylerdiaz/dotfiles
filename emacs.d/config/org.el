@@ -29,4 +29,4 @@
 (setq org-agenda-include-diary t)                                                ;; (7)
 (setq org-agenda-include-all-todo t)
 (setq org-startup-indented t)
-;; (setq org-replace-disputed-keys t)
+(setq org-replace-disputed-keys t)
