@@ -4,6 +4,8 @@
 "\e[6~": history-search-forward
 "\e[A": history-search-backward
 "\e[B": history-search-forward
+"\M-OA": history-search-backward
+"\M-OB": history-search-forward
 "\e[3~": delete-char
 "\e[2~": quoted-insert
 "\e[5C": forward-word
