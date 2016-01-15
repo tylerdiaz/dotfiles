@@ -314,6 +314,8 @@ This functions should be added to the hooks of major modes for programming."
 (load "~/.emacs.d/config/org.el")
 (load "~/.emacs.d/config/keys.el")
 
+(load-theme 'sanityinc-tomorrow-eighties t)
+
 ;; start the emacsserver that listens to emacsclient
 (server-start)
 
