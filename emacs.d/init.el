@@ -289,7 +289,7 @@ This functions should be added to the hooks of major modes for programming."
 
 (add-hook 'after-init-hook 'inf-ruby-switch-setup)
 (add-hook 'ruby-mode-common-hook 'font-lock-comment-annotations)
-
+(setq ruby-insert-encoding-magic-comment nil)
 (setq compilation-scroll-output t)
 
 ;; recompile init file after save
