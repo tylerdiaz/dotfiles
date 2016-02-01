@@ -35,9 +35,11 @@ values."
      markdown
      themes-megapack
      org
-     ;; (shell :variables
-     ;;        shell-default-height 30
-     ;;        shell-default-position 'bottom)
+     (shell :variables
+            shell-default-height 10
+            shell-default-shell 'ansi-term
+            shell-default-term-shell "~/bash_proxy"
+            shell-default-position 'bottom)
      spell-checking
      syntax-checking
      osx
@@ -266,6 +268,7 @@ values."
 (global-set-key (kbd "s-b") 'helm-buffers-list)
 (global-set-key (kbd "s-{") 'previous-buffer)
 (global-set-key (kbd "s-}") 'next-buffer)
+(global-set-key (kbd "s-w") 'kill-this-buffer)
 
 (global-set-key (kbd "<C-S-down>") 'move-line-down)
 (global-set-key (kbd "<C-S-up>") 'move-line-up)
