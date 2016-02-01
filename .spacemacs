@@ -29,12 +29,12 @@ values."
                       auto-completion-enable-sort-by-usage t
                       auto-completion-enable-snippets-in-popup t)
      emacs-lisp
+     org
      javascript
      ruby
      emoji
      markdown
      themes-megapack
-     org
      (shell :variables
             shell-default-height 10
             shell-default-shell 'ansi-term
@@ -273,6 +273,16 @@ values."
 (global-set-key (kbd "<C-S-down>") 'move-line-down)
 (global-set-key (kbd "<C-S-up>") 'move-line-up)
 
+(define-key evil-insert-state-map [left] 'undefined)
+(define-key evil-insert-state-map [right] 'undefined)
+(define-key evil-insert-state-map [up] 'undefined)
+(define-key evil-insert-state-map [down] 'undefined)
+
+(define-key evil-motion-state-map [left] 'undefined)
+(define-key evil-motion-state-map [right] 'undefined)
+(define-key evil-motion-state-map [up] 'undefined)
+(define-key evil-motion-state-map [down] 'undefined)
+
 (defun dotspacemacs/user-init ()
   "Initialization function for user code.
 It is called immediately after `dotspacemacs/init'.  You are free to put almost
@@ -290,7 +300,8 @@ in `dotspacemacs/user-config'."
    web-mode-code-indent-offset 2
    web-mode-attr-indent-offset 2
    web-mode-enable-current-element-highlight t
-   web-mode-comment-style 2)
+   web-mode-comment-style 2
+  )
   (with-eval-after-load 'web-mode
     (add-to-list 'web-mode-indentation-params '("lineup-args" . nil))
     (add-to-list 'web-mode-indentation-params '("lineup-concats" . nil))
@@ -307,6 +318,10 @@ layers configuration. You are free to put any user code."
   (global-evil-surround-mode 1)
   (golden-ratio-mode 1)
   (global-auto-complete-mode)
+  (setq org-agenda-include-diary t)
+  (setq org-agenda-include-all-todo t)
+  (setq org-startup-indented t)
+  (setq org-replace-disputed-keys t)
   )
 
 ;; Do not write anything past this comment. This is where Emacs will
