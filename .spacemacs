@@ -1,4 +1,4 @@
-;; -*- mode: emacs-lisp -*-
+;; -*- Mode: emacs-lisp -*-
 ;; This file is loaded by Spacemacs at startup.
 ;; It must be stored in your home directory.
 
@@ -33,6 +33,7 @@ values."
      javascript
      ruby
      emoji
+     prodigy
      markdown
      themes-megapack
      (shell :variables
@@ -107,7 +108,7 @@ values."
    ;; (default '(recents projects))
    dotspacemacs-startup-lists '(recents projects)
    ;; Number of recent files to show in the startup buffer. Ignored if
-   ;; `dotspacemacs-startup-lists' doesn't include `recents'. (default 5)
+   ;; `dotspacemacs-startup-lists' doesn't include `recents'. (Default 5)
    dotspacemacs-startup-recent-list-size 10
    ;; Default major mode of the scratch buffer (default `text-mode')
    dotspacemacs-scratch-mode 'text-mode
@@ -120,13 +121,13 @@ values."
                          solarized-dark
                          leuven
                          monokai
-                         zenburn)
+                         zenburn) 
    ;; If non nil the cursor color matches the state color in GUI Emacs.
    dotspacemacs-colorize-cursor-according-to-state t
    ;; Default font. `powerline-scale' allows to quickly tweak the mode-line
    ;; size to make separators look not too crappy.
    dotspacemacs-default-font '("Inconsolata"
-                               :size 16
+                               :size 16 
                                :weight normal
                                :width normal
                                :powerline-scale 1.4)
@@ -265,7 +266,7 @@ values."
 (global-set-key (kbd "s-F") 'helm-git-grep-at-point)
 
 ;; Buffer navigation
-(global-set-key (kbd "s-b") 'helm-buffers-list)
+(global-set-key (kbd "s-b") 'helm-projectile-switch-to-buffer)
 (global-set-key (kbd "s-{") 'previous-buffer)
 (global-set-key (kbd "s-}") 'next-buffer)
 (global-set-key (kbd "s-w") 'kill-this-buffer)
@@ -290,8 +291,7 @@ any user code here.  The exception is org related code, which should be placed
 in `dotspacemacs/user-config'."
   (setq-default
    ;; js2-mode stuff
-   js2-basic-offset 2
-   js-indent-level 2
+   js2-basic-offsets-indent-level 2
    ;; web-mode stuff
    css-indent-offset 2
    web-mode-indent-style 2
@@ -307,7 +307,6 @@ in `dotspacemacs/user-config'."
     (add-to-list 'web-mode-indentation-params '("lineup-concats" . nil))
     (add-to-list 'web-mode-indentation-params '("lineup-calls" . nil)))
   )
-
 (defun dotspacemacs/user-config ()
   "Configuration function for user code.
 This function is called at the very end of Spacemacs initialization after
@@ -322,7 +321,17 @@ layers configuration. You are free to put any user code."
   (setq org-agenda-include-all-todo t)
   (setq org-startup-indented t)
   (setq org-replace-disputed-keys t)
+  (prodigy-define-service
+    :name "Countr: Rails server"
+    :command "rails"
+    :args '("server")
+    :tags '(countr)
+    :cwd "~/Desktop/countr")
+  (prodigy-define-service
+    :name "Countr: Webpack server"
+    :command "npm"
+    :args '("run" "serve")
+    :tags '(countr)
+    :cwd "~/Desktop/countr/client")
   )
 
-;; Do not write anything past this comment. This is where Emacs will
-;; auto-generate custom variable definitions.
