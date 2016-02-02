@@ -274,15 +274,15 @@ values."
 (global-set-key (kbd "<C-S-down>") 'move-line-down)
 (global-set-key (kbd "<C-S-up>") 'move-line-up)
 
-(define-key evil-insert-state-map [left] 'undefined)
-(define-key evil-insert-state-map [right] 'undefined)
-(define-key evil-insert-state-map [up] 'undefined)
-(define-key evil-insert-state-map [down] 'undefined)
+;(define-key evil-insert-state-map [left] 'undefined)
+;(define-key evil-insert-state-map [right] 'undefined)
+;(define-key evil-insert-state-map [up] 'undefined)
+;(define-key evil-insert-state-map [down] 'undefined)
 
-(define-key evil-motion-state-map [left] 'undefined)
-(define-key evil-motion-state-map [right] 'undefined)
-(define-key evil-motion-state-map [up] 'undefined)
-(define-key evil-motion-state-map [down] 'undefined)
+;(define-key evil-motion-state-map [left] 'undefined)
+;(define-key evil-motion-state-map [right] 'undefined)
+;(define-key evil-motion-state-map [up] 'undefined)
+;(define-key evil-motion-state-map [down] 'undefined)
 
 (defun dotspacemacs/user-init ()
   "Initialization function for user code.
