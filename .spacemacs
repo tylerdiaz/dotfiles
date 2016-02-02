@@ -93,7 +93,7 @@ values."
    ;; variable is `emacs' then the `holy-mode' is enabled at startup. `hybrid'
    ;; uses emacs key bindings for vim's insert mode, but otherwise leaves evil
    ;; unchanged. (default 'vim)
-   dotspacemacs-editing-style 'hybrid
+   dotspacemacs-editing-style 'vim
    ;; If non nil output loading progress in `*Messages*' buffer. (default nil)
    dotspacemacs-verbose-loading nil
    ;; Specify the startup banner. Default value is `official', it displays
@@ -115,19 +115,13 @@ values."
    ;; List of themes, the first of the list is loaded when spacemacs starts.
    ;; Press <SPC> T n to cycle to the next theme in the list (works great
    ;; with 2 themes variants, one dark and one light)
-   dotspacemacs-themes '(spacemacs-dark
-                         spacemacs-light
-                         solarized-light
-                         solarized-dark
-                         leuven
-                         monokai
-                         zenburn) 
+   dotspacemacs-themes '(zenburn)
    ;; If non nil the cursor color matches the state color in GUI Emacs.
    dotspacemacs-colorize-cursor-according-to-state t
    ;; Default font. `powerline-scale' allows to quickly tweak the mode-line
    ;; size to make separators look not too crappy.
    dotspacemacs-default-font '("Inconsolata"
-                               :size 16 
+                               :size 18
                                :weight normal
                                :width normal
                                :powerline-scale 1.4)
@@ -334,4 +328,3 @@ layers configuration. You are free to put any user code."
     :tags '(countr)
     :cwd "~/Desktop/countr/client")
   )
-
