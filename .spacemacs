@@ -29,7 +29,8 @@ values."
                       auto-completion-enable-sort-by-usage t
                       auto-completion-enable-snippets-in-popup t)
      emacs-lisp
-     org
+     (org :variables
+          org-enable-github-support t)
      javascript
      ruby
      emoji
@@ -62,7 +63,8 @@ values."
                                       evil-surround
                                       )
    ;; A list of packages and/or extensions that will not be install and loaded.
-   dotspacemacs-excluded-packages '(company)
+   dotspacemacs-excluded-packages '(org-bullets
+                                    company)
    ;; If non-nil spacemacs will delete any orphan packages, i.e. packages that
    ;; are declared in a layer which is not a member of
    ;; the list `dotspacemacs-configuration-layers'. (default t)
@@ -115,7 +117,14 @@ values."
    ;; List of themes, the first of the list is loaded when spacemacs starts.
    ;; Press <SPC> T n to cycle to the next theme in the list (works great
    ;; with 2 themes variants, one dark and one light)
-   dotspacemacs-themes '(zenburn)
+   dotspacemacs-themes '(sanityinc-tomorrow-eighties
+                         spacemacs-dark
+                         spacemacs-light
+                         solarized-light
+                         solarized-dark
+                         leuven
+                         monokai
+                         zenburn)
    ;; If non nil the cursor color matches the state color in GUI Emacs.
    dotspacemacs-colorize-cursor-according-to-state t
    ;; Default font. `powerline-scale' allows to quickly tweak the mode-line
