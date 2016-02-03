@@ -108,7 +108,7 @@ values."
    ;; List of items to show in the startup buffer. If nil it is disabled.
    ;; Possible values are: `recents' `bookmarks' `projects'.
    ;; (default '(recents projects))
-   dotspacemacs-startup-lists '(recents projects)
+   dotspacemacs-startup-lists '(recents bookmarks projects)
    ;; Number of recent files to show in the startup buffer. Ignored if
    ;; `dotspacemacs-startup-lists' doesn't include `recents'. (Default 5)
    dotspacemacs-startup-recent-list-size 10
@@ -133,7 +133,7 @@ values."
                                :size 18
                                :weight normal
                                :width normal
-                               :powerline-scale 1.4)
+                               :powerline-scale 1.3)
    ;; The leader key
    dotspacemacs-leader-key "SPC"
    ;; The leader key accessible in `emacs state' and `insert state'
@@ -276,16 +276,6 @@ values."
 
 (global-set-key (kbd "<C-S-down>") 'move-line-down)
 (global-set-key (kbd "<C-S-up>") 'move-line-up)
-
-;(define-key evil-insert-state-map [left] 'undefined)
-;(define-key evil-insert-state-map [right] 'undefined)
-;(define-key evil-insert-state-map [up] 'undefined)
-;(define-key evil-insert-state-map [down] 'undefined)
-
-;(define-key evil-motion-state-map [left] 'undefined)
-;(define-key evil-motion-state-map [right] 'undefined)
-;(define-key evil-motion-state-map [up] 'undefined)
-;(define-key evil-motion-state-map [down] 'undefined)
 
 (defun dotspacemacs/user-init ()
   "Initialization function for user code.
