@@ -30,12 +30,18 @@ values."
                       auto-completion-enable-snippets-in-popup t)
      emacs-lisp
      (org :variables
-          org-enable-github-support t)
+          org-enable-github-support t
+          org-agenda-include-diary t
+          org-agenda-include-all-todo t
+          org-startup-indented t
+          org-replace-disputed-keys t)
      javascript
      ruby
+     react
      emoji
      prodigy
      markdown
+     clojure
      themes-megapack
      (shell :variables
             shell-default-height 10
@@ -50,7 +56,6 @@ values."
                       version-control-global-margin t)
      git
      github
-     react
      ruby-on-rails
      )
    ;; List of additional packages that will be installed without being
@@ -189,7 +194,7 @@ values."
    dotspacemacs-helm-position 'bottom
    ;; If non nil the paste micro-state is enabled. When enabled pressing `p`
    ;; several times cycle between the kill ring content. (default nil)
-   dotspacemacs-enable-paste-micro-state nil
+   dotspacemacs-enable-paste-micro-state t
    ;; Which-key delay in seconds. The which-key buffer is the popup listing
    ;; the commands bound to the current keystroke sequence. (default 0.4)
    dotspacemacs-which-key-delay 0.4
@@ -211,7 +216,7 @@ values."
    ;; If non nil the frame is maximized when Emacs starts up.
    ;; Takes effect only if `dotspacemacs-fullscreen-at-startup' is nil.
    ;; (default nil) (Emacs 24.4+ only)
-   dotspacemacs-maximized-at-startup t
+   dotspacemacs-maximized-at-startup nil
    ;; A value from the range (0..100), in increasing opacity, which describes
    ;; the transparency level of a frame when it's active or selected.
    ;; Transparency can be toggled through `toggle-transparency'. (default 90)
@@ -269,7 +274,7 @@ values."
 (global-set-key (kbd "s-F") 'helm-git-grep-at-point)
 
 ;; Buffer navigation
-(global-set-key (kbd "s-b") 'helm-projectile-switch-to-buffer)
+(global-set-key (kbd "s-b") 'helm-mini)
 (global-set-key (kbd "s-{") 'previous-buffer)
 (global-set-key (kbd "s-}") 'next-buffer)
 (global-set-key (kbd "s-w") 'kill-this-buffer)
@@ -284,7 +289,9 @@ any user code here.  The exception is org related code, which should be placed
 in `dotspacemacs/user-config'."
   (setq-default
    ;; js2-mode stuff
-   js2-basic-offsets-indent-level 2
+   js2-basic-offset 2
+   js-indent-level 2
+   js2-indent-switch-body t
    ;; web-mode stuff
    css-indent-offset 2
    web-mode-indent-style 2
@@ -294,6 +301,9 @@ in `dotspacemacs/user-config'."
    web-mode-attr-indent-offset 2
    web-mode-enable-current-element-highlight t
    web-mode-comment-style 2
+   ;; Personal preference
+   mode-require-final-newline t
+   require-final-newline t
   )
   (with-eval-after-load 'web-mode
     (add-to-list 'web-mode-indentation-params '("lineup-args" . nil))
@@ -310,10 +320,6 @@ layers configuration. You are free to put any user code."
   (global-evil-surround-mode 1)
   (golden-ratio-mode 1)
   (global-auto-complete-mode)
-  (setq org-agenda-include-diary t)
-  (setq org-agenda-include-all-todo t)
-  (setq org-startup-indented t)
-  (setq org-replace-disputed-keys t)
   (prodigy-define-service
     :name "Countr: Rails server"
     :command "rails"
