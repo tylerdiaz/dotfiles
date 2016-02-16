@@ -28,20 +28,20 @@ values."
                       auto-completion-enable-help-tooltip t
                       auto-completion-enable-sort-by-usage t
                       auto-completion-enable-snippets-in-popup t)
-     emacs-lisp
      (org :variables
-          org-enable-github-support t
           org-agenda-include-diary t
           org-agenda-include-all-todo t
           org-startup-indented t
-          org-replace-disputed-keys t)
+          org-replace-disputed-keys t
+          org-enable-github-support t)
+     emacs-lisp
      javascript
      ruby
-     react
      emoji
      prodigy
      markdown
-     clojure
+     (clojure :variables
+              clojure-enable-fancify-symbols t)
      themes-megapack
      (shell :variables
             shell-default-height 10
@@ -56,20 +56,18 @@ values."
                       version-control-global-margin t)
      git
      github
+     react
+     deft
      ruby-on-rails
+     evil-cleverparens
      )
    ;; List of additional packages that will be installed without being
    ;; wrapped in a layer. If you need some configuration for these
    ;; packages, then consider creating a layer. You can also put the
    ;; configuration in `dotspacemacs/user-config'.
-   dotspacemacs-additional-packages '(
-                                      evil-nerd-commenter
-                                      evil-exchange
-                                      evil-surround
-                                      )
+   dotspacemacs-additional-packages '(wc-goal-mode)
    ;; A list of packages and/or extensions that will not be install and loaded.
-   dotspacemacs-excluded-packages '(org-bullets
-                                    company)
+   dotspacemacs-excluded-packages '(org-bullets)
    ;; If non-nil spacemacs will delete any orphan packages, i.e. packages that
    ;; are declared in a layer which is not a member of
    ;; the list `dotspacemacs-configuration-layers'. (default t)
@@ -118,24 +116,17 @@ values."
    ;; `dotspacemacs-startup-lists' doesn't include `recents'. (Default 5)
    dotspacemacs-startup-recent-list-size 10
    ;; Default major mode of the scratch buffer (default `text-mode')
-   dotspacemacs-scratch-mode 'text-mode
+   dotspacemacs-scratch-mode 'org-mode
    ;; List of themes, the first of the list is loaded when spacemacs starts.
    ;; Press <SPC> T n to cycle to the next theme in the list (works great
    ;; with 2 themes variants, one dark and one light)
-   dotspacemacs-themes '(sanityinc-tomorrow-eighties
-                         spacemacs-dark
-                         spacemacs-light
-                         solarized-light
-                         solarized-dark
-                         leuven
-                         monokai
-                         zenburn)
+   dotspacemacs-themes '(sanityinc-tomorrow-eighties leuven)
    ;; If non nil the cursor color matches the state color in GUI Emacs.
    dotspacemacs-colorize-cursor-according-to-state t
    ;; Default font. `powerline-scale' allows to quickly tweak the mode-line
    ;; size to make separators look not too crappy.
    dotspacemacs-default-font '("Inconsolata"
-                               :size 18
+                               :size 16
                                :weight normal
                                :width normal
                                :powerline-scale 1.3)
@@ -274,7 +265,7 @@ values."
 (global-set-key (kbd "s-F") 'helm-git-grep-at-point)
 
 ;; Buffer navigation
-(global-set-key (kbd "s-b") 'helm-mini)
+(global-set-key (kbd "s-b") 'helm-projectile-switch-to-buffer)
 (global-set-key (kbd "s-{") 'previous-buffer)
 (global-set-key (kbd "s-}") 'next-buffer)
 (global-set-key (kbd "s-w") 'kill-this-buffer)
@@ -287,29 +278,9 @@ values."
 It is called immediately after `dotspacemacs/init'.  You are free to put almost
 any user code here.  The exception is org related code, which should be placed
 in `dotspacemacs/user-config'."
-  (setq-default
-   ;; js2-mode stuff
-   js2-basic-offset 2
-   js-indent-level 2
-   js2-indent-switch-body t
-   ;; web-mode stuff
-   css-indent-offset 2
-   web-mode-indent-style 2
-   web-mode-markup-indent-offset 2
-   web-mode-css-indent-offset 2
-   web-mode-code-indent-offset 2
-   web-mode-attr-indent-offset 2
-   web-mode-enable-current-element-highlight t
-   web-mode-comment-style 2
-   ;; Personal preference
-   mode-require-final-newline t
-   require-final-newline t
+  (setq deft-directory "~/Google Drive/deft-notes")
   )
-  (with-eval-after-load 'web-mode
-    (add-to-list 'web-mode-indentation-params '("lineup-args" . nil))
-    (add-to-list 'web-mode-indentation-params '("lineup-concats" . nil))
-    (add-to-list 'web-mode-indentation-params '("lineup-calls" . nil)))
-  )
+
 (defun dotspacemacs/user-config ()
   "Configuration function for user code.
 This function is called at the very end of Spacemacs initialization after
@@ -320,6 +291,24 @@ layers configuration. You are free to put any user code."
   (global-evil-surround-mode 1)
   (golden-ratio-mode 1)
   (global-auto-complete-mode)
+  (global-company-mode)
+  (spacemacs/toggle-evil-cleverparens-on)
+  (setq-default
+   ;; js2-mode stuff
+   js2-basic-offsets-indent-level 2
+   ;; web-mode stuff
+   css-indent-offset 2
+   web-mode-indent-style 2
+   web-mode-markup-indent-offset 2
+   web-mode-css-indent-offset 2
+   web-mode-code-indent-offset 2
+   web-mode-attr-indent-offset 2
+   web-mode-enable-current-element-highlight t
+   web-mode-comment-style 2)
+  (with-eval-after-load 'web-mode
+    (add-to-list 'web-mode-indentation-params '("lineup-args" . nil))
+    (add-to-list 'web-mode-indentation-params '("lineup-concats" . nil))
+    (add-to-list 'web-mode-indentation-params '("lineup-calls" . nil)))
   (prodigy-define-service
     :name "Countr: Rails server"
     :command "rails"
