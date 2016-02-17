@@ -65,7 +65,7 @@ values."
    ;; wrapped in a layer. If you need some configuration for these
    ;; packages, then consider creating a layer. You can also put the
    ;; configuration in `dotspacemacs/user-config'.
-   dotspacemacs-additional-packages '(wc-goal-mode)
+   dotspacemacs-additional-packages '(wc-goal-mode discover-my-major)
    ;; A list of packages and/or extensions that will not be install and loaded.
    dotspacemacs-excluded-packages '(org-bullets)
    ;; If non-nil spacemacs will delete any orphan packages, i.e. packages that
@@ -126,7 +126,7 @@ values."
    ;; Default font. `powerline-scale' allows to quickly tweak the mode-line
    ;; size to make separators look not too crappy.
    dotspacemacs-default-font '("Inconsolata"
-                               :size 16
+                               :size 18
                                :weight normal
                                :width normal
                                :powerline-scale 1.3)
@@ -265,7 +265,7 @@ values."
 (global-set-key (kbd "s-F") 'helm-git-grep-at-point)
 
 ;; Buffer navigation
-(global-set-key (kbd "s-b") 'helm-projectile-switch-to-buffer)
+(global-set-key (kbd "s-b") 'helm-mini)
 (global-set-key (kbd "s-{") 'previous-buffer)
 (global-set-key (kbd "s-}") 'next-buffer)
 (global-set-key (kbd "s-w") 'kill-this-buffer)
@@ -278,7 +278,7 @@ values."
 It is called immediately after `dotspacemacs/init'.  You are free to put almost
 any user code here.  The exception is org related code, which should be placed
 in `dotspacemacs/user-config'."
-  (setq deft-directory "~/Google Drive/deft-notes")
+  (setq deft-directory "~/Google Drive/deft-notes/mojotech")
   )
 
 (defun dotspacemacs/user-config ()
@@ -294,7 +294,8 @@ layers configuration. You are free to put any user code."
   (global-company-mode)
   (spacemacs/toggle-evil-cleverparens-on)
   (setq-default
-   ;; js2-mode stuff
+   ;; js stuff
+   js-indent-level 2
    js2-basic-offsets-indent-level 2
    ;; web-mode stuff
    css-indent-offset 2
@@ -304,7 +305,16 @@ layers configuration. You are free to put any user code."
    web-mode-code-indent-offset 2
    web-mode-attr-indent-offset 2
    web-mode-enable-current-element-highlight t
+   web-mode-enable-auto-quoting nil
    web-mode-comment-style 2)
+  (setq magit-diff-refine-hunk 'all)
+  (flycheck-add-mode 'javascript-eslint 'web-mode)
+  (flycheck-add-mode 'javascript-eslint 'js2-mode)
+  (flycheck-add-mode 'javascript-eslint 'js-mode)
+  ;; Disable jshint since eslint handles the styling
+  (setq-default flycheck-disabled-checkers
+                (append flycheck-disabled-checkers
+                        '(javascript-jshint)))
   (with-eval-after-load 'web-mode
     (add-to-list 'web-mode-indentation-params '("lineup-args" . nil))
     (add-to-list 'web-mode-indentation-params '("lineup-concats" . nil))
