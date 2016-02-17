@@ -278,7 +278,7 @@ values."
 It is called immediately after `dotspacemacs/init'.  You are free to put almost
 any user code here.  The exception is org related code, which should be placed
 in `dotspacemacs/user-config'."
-  (setq deft-directory "~/Google Drive/deft-notes/mojotech")
+  (setq deft-directory "~/Google Drive/deft-notes")
   )
 
 (defun dotspacemacs/user-config ()
