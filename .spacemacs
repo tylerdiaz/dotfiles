@@ -273,15 +273,6 @@ layers configuration. You are free to put any user code."
   (golden-ratio-mode 1)
   (global-auto-complete-mode)
   (global-company-mode)
-  (define-clojure-indent ;; for Compojure macros
-    (defroutes 'defun)
-    (GET 2)
-    (POST 2)
-    (PUT 2)
-    (DELETE 2)
-    (HEAD 2)
-    (ANY 2)
-    (context 2))
   (spacemacs/toggle-evil-cleverparens-on)
   (setq-default
    ;; js stuff
