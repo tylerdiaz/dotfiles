@@ -36,7 +36,6 @@ values."
      ;; tools & applications
      emoji
      prodigy
-     themes-megapack
      spell-checking
      syntax-checking
      osx
@@ -52,7 +51,7 @@ values."
                       version-control-diff-tool 'diff-hl
                       version-control-global-margin t)
      (shell :variables
-            shell-default-height 10
+            shell-default-height 4
             shell-default-shell 'ansi-term
             shell-default-term-shell "~/bash_proxy"
             shell-default-position 'bottom)
@@ -277,7 +276,6 @@ layers configuration. You are free to put any user code."
   (setq-default
    ;; js stuff
    js2-basic-offset 2
-   js2-basic-offsets-indent-level 2
    ;; web-mode stuff
    css-indent-offset 2
    web-mode-indent-style 2
@@ -287,15 +285,12 @@ layers configuration. You are free to put any user code."
    web-mode-attr-indent-offset 2
    web-mode-enable-current-element-highlight t
    web-mode-enable-auto-quoting nil
-   web-mode-comment-style 2)
+   web-mode-comment-style 2
+   )
   (setq magit-diff-refine-hunk 'all)
   (flycheck-add-mode 'javascript-eslint 'web-mode)
   (flycheck-add-mode 'javascript-eslint 'js2-mode)
   (flycheck-add-mode 'javascript-eslint 'js-mode)
-  ;; Disable jshint since eslint handles the styling
-  (setq-default flycheck-disabled-checkers
-                (append flycheck-disabled-checkers
-                        '(javascript-jshint)))
   (with-eval-after-load 'web-mode
     (add-to-list 'web-mode-indentation-params '("lineup-args" . nil))
     (add-to-list 'web-mode-indentation-params '("lineup-concats" . nil))
@@ -313,6 +308,7 @@ layers configuration. You are free to put any user code."
     :tags '(countr)
     :cwd "~/Desktop/countr/client")
   )
+
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
