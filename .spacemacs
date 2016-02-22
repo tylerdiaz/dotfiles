@@ -23,43 +23,45 @@ values."
      ;; Uncomment some layer names and press <SPC f e R> (Vim style) or
      ;; <M-m f e R> (Emacs style) to install them.
      ;; ----------------------------------------------------------------
-     better-defaults
+     ;; languages & frameworks
+     emacs-lisp
+     javascript
+     ruby
+     react
+     markdown
+     ruby-on-rails
+     sql
+     (clojure :variables clojure-enable-fancify-symbols t)
+     php
+     ;; tools & applications
+     emoji
+     prodigy
+     themes-megapack
+     spell-checking
+     syntax-checking
+     osx
+     git
+     github
+     deft
+     evil-cleverparens
      (auto-completion :variables
                       auto-completion-enable-help-tooltip t
                       auto-completion-enable-sort-by-usage t
                       auto-completion-enable-snippets-in-popup t)
+     (version-control :variables
+                      version-control-diff-tool 'diff-hl
+                      version-control-global-margin t)
+     (shell :variables
+            shell-default-height 10
+            shell-default-shell 'ansi-term
+            shell-default-term-shell "~/bash_proxy"
+            shell-default-position 'bottom)
      (org :variables
           org-agenda-include-diary t
           org-agenda-include-all-todo t
           org-startup-indented t
           org-replace-disputed-keys t
           org-enable-github-support t)
-     emacs-lisp
-     javascript
-     ruby
-     emoji
-     prodigy
-     markdown
-     (clojure :variables
-              clojure-enable-fancify-symbols t)
-     themes-megapack
-     (shell :variables
-            shell-default-height 10
-            shell-default-shell 'ansi-term
-            shell-default-term-shell "~/bash_proxy"
-            shell-default-position 'bottom)
-     spell-checking
-     syntax-checking
-     osx
-     (version-control :variables
-                      version-control-diff-tool 'diff-hl
-                      version-control-global-margin t)
-     git
-     github
-     react
-     deft
-     ruby-on-rails
-     evil-cleverparens
      )
    ;; List of additional packages that will be installed without being
    ;; wrapped in a layer. If you need some configuration for these
@@ -252,27 +254,6 @@ values."
    dotspacemacs-whitespace-cleanup 'changed
    ))
 
-;; Key commands
-
-;; Switching windows
-(global-set-key [S-left] 'windmove-left)
-(global-set-key [S-right] 'windmove-right)
-(global-set-key [S-up] 'windmove-up)
-(global-set-key [S-down] 'windmove-down)
-
-;; Project tools
-(global-set-key (kbd "s-t") 'helm-projectile-find-file)
-(global-set-key (kbd "s-F") 'helm-git-grep-at-point)
-
-;; Buffer navigation
-(global-set-key (kbd "s-b") 'helm-mini)
-(global-set-key (kbd "s-{") 'previous-buffer)
-(global-set-key (kbd "s-}") 'next-buffer)
-(global-set-key (kbd "s-w") 'kill-this-buffer)
-
-(global-set-key (kbd "<C-S-down>") 'move-line-down)
-(global-set-key (kbd "<C-S-up>") 'move-line-up)
-
 (defun dotspacemacs/user-init ()
   "Initialization function for user code.
 It is called immediately after `dotspacemacs/init'.  You are free to put almost
@@ -292,10 +273,19 @@ layers configuration. You are free to put any user code."
   (golden-ratio-mode 1)
   (global-auto-complete-mode)
   (global-company-mode)
+  (define-clojure-indent ;; for Compojure macros
+    (defroutes 'defun)
+    (GET 2)
+    (POST 2)
+    (PUT 2)
+    (DELETE 2)
+    (HEAD 2)
+    (ANY 2)
+    (context 2))
   (spacemacs/toggle-evil-cleverparens-on)
   (setq-default
    ;; js stuff
-   js-indent-level 2
+   js2-basic-offset 2
    js2-basic-offsets-indent-level 2
    ;; web-mode stuff
    css-indent-offset 2
@@ -332,3 +322,18 @@ layers configuration. You are free to put any user code."
     :tags '(countr)
     :cwd "~/Desktop/countr/client")
   )
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(js2-basic-offset 2)
+ '(js2-mode-show-parse-errors nil)
+ '(js2-mode-show-strict-warnings nil))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(company-tooltip-common ((t (:inherit company-tooltip :weight bold :underline nil))))
+ '(company-tooltip-common-selection ((t (:inherit company-tooltip-selection :weight bold :underline nil)))))
