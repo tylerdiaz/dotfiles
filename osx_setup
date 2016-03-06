@@ -42,12 +42,12 @@ binaries=(
   imagemagick
   postgresql
   mongodb
-  entr # Run arbitrary commands when files change
+  entr  # Run arbitrary commands when files change
   moreutils
   redis
   sqlite
-  tree
-  youtube-dl
+  tree  # list directories in a easy-to-share way
+  youtube-dl  # offline preference
 )
 
 echo "Installing brew binaries..."
@@ -55,6 +55,8 @@ brew install ${binaries[@]}
 
 # Mostly for emacs
 brew install aspell --with-lang=en
+brew tap railwaycat/homebrew-emacsmacport
+brew install emacs-mac --with-spacemacs-icon  # OR, brew cask install emacs-mac
 
 brew install caskroom/cask/brew-cask 2>/dev/null
 
@@ -63,10 +65,11 @@ apps=(
   flux
   google-chrome
   quicklook-csv
+  google-drive
   quicklook-json
   slack
   iTerm2
-  emacs
+  dockertoolbox
   spotify
   seil
   wacom-tablet
@@ -78,6 +81,7 @@ apps=(
 # Default is: /Users/$user/Applications
 echo "Installing apps via brew cask..."
 brew cask install --appdir="/Applications" ${apps[@]} 2>/dev/null
+brew linkapps
 
 # Cleanup brew
 echo "Cleaning up brew..."
@@ -85,8 +89,6 @@ brew cleanup 2>/dev/null
 
 ## Install RVM
 curl -L https://get.rvm.io | bash -s stable --auto-dotfiles --autolibs=enable --rails
-
-### System config time
 
 # Restart automatically if the computer freezes
 sudo systemsetup -setrestartfreeze on
