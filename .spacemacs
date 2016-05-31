@@ -25,15 +25,18 @@ values."
      ;; ----------------------------------------------------------------
      ;; languages & frameworks
      emacs-lisp
+     haskell
      javascript
      ruby
      react
      markdown
      ruby-on-rails
+     restclient
      sql
      (clojure :variables clojure-enable-fancify-symbols t)
      php
      ;; tools & applications
+     eyebrowse
      emoji
      prodigy
      spell-checking
@@ -42,6 +45,7 @@ values."
      git
      github
      deft
+     extra-langs
      evil-cleverparens
      (auto-completion :variables
                       auto-completion-enable-help-tooltip t
@@ -66,7 +70,7 @@ values."
    ;; wrapped in a layer. If you need some configuration for these
    ;; packages, then consider creating a layer. You can also put the
    ;; configuration in `dotspacemacs/user-config'.
-   dotspacemacs-additional-packages '(wc-goal-mode discover-my-major)
+   dotspacemacs-additional-packages '(jump wc-goal-mode discover-my-major)
    ;; A list of packages and/or extensions that will not be install and loaded.
    dotspacemacs-excluded-packages '(org-bullets)
    ;; If non-nil spacemacs will delete any orphan packages, i.e. packages that
@@ -126,7 +130,7 @@ values."
    dotspacemacs-colorize-cursor-according-to-state t
    ;; Default font. `powerline-scale' allows to quickly tweak the mode-line
    ;; size to make separators look not too crappy.
-   dotspacemacs-default-font '("Inconsolata"
+   dotspacemacs-default-font '("Inconsolata for Powerline"
                                :size 18
                                :weight normal
                                :width normal
@@ -180,7 +184,7 @@ values."
    dotspacemacs-helm-resize nil
    ;; if non nil, the helm header is hidden when there is only one source.
    ;; (default nil)
-   dotspacemacs-helm-no-header nil
+   dotspacemacs-helm-no-header t
    ;; define the position to display `helm', options are `bottom', `top',
    ;; `left', or `right'. (default 'bottom)
    dotspacemacs-helm-position 'bottom
@@ -222,7 +226,7 @@ values."
    ;; If non nil smooth scrolling (native-scrolling) is enabled. Smooth
    ;; scrolling overrides the default behavior of Emacs which recenters the
    ;; point when it reaches the top or bottom of the screen. (default t)
-   dotspacemacs-smooth-scrolling t
+   dotspacemacs-smooth-scrolling nil
    ;; If non nil line numbers are turned on in all `prog-mode' and `text-mode'
    ;; derivatives. If set to `relative', also turns on relative line numbers.
    ;; (default nil)
@@ -258,6 +262,7 @@ values."
 It is called immediately after `dotspacemacs/init'.  You are free to put almost
 any user code here.  The exception is org related code, which should be placed
 in `dotspacemacs/user-config'."
+  ;; (setq git-magit-status-fullscreen t)
   (setq deft-directory "~/Google Drive/deft-notes")
   )
 
@@ -270,6 +275,7 @@ layers configuration. You are free to put any user code."
   (evil-define-key 'visual evil-surround-mode-map "S" 'evil-surround-region)
   (global-evil-surround-mode 1)
   (golden-ratio-mode 1)
+  (add-hook 'react-mode-hook 'emmet-mode)
   (global-auto-complete-mode)
   (global-company-mode)
   (spacemacs/toggle-evil-cleverparens-on)
@@ -285,12 +291,7 @@ layers configuration. You are free to put any user code."
    web-mode-attr-indent-offset 2
    web-mode-enable-current-element-highlight t
    web-mode-enable-auto-quoting nil
-   web-mode-comment-style 2
-   )
-  (setq magit-diff-refine-hunk 'all)
-  (flycheck-add-mode 'javascript-eslint 'web-mode)
-  (flycheck-add-mode 'javascript-eslint 'js2-mode)
-  (flycheck-add-mode 'javascript-eslint 'js-mode)
+   web-mode-comment-style 2)
   (with-eval-after-load 'web-mode
     (add-to-list 'web-mode-indentation-params '("lineup-args" . nil))
     (add-to-list 'web-mode-indentation-params '("lineup-concats" . nil))
@@ -304,7 +305,7 @@ layers configuration. You are free to put any user code."
   (prodigy-define-service
     :name "Countr: Webpack server"
     :command "npm"
-    :args '("run" "serve")
+    :args '("start")
     :tags '(countr)
     :cwd "~/Desktop/countr/client")
   )
@@ -315,6 +316,7 @@ layers configuration. You are free to put any user code."
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(js2-basic-offset 2)
+ '(js2-indent-switch-body t)
  '(js2-mode-show-parse-errors nil)
  '(js2-mode-show-strict-warnings nil))
 (custom-set-faces
