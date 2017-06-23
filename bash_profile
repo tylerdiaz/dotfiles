@@ -1,4 +1,5 @@
 export EDITOR=emacsclient
+alias e="emacsclient -t"
 export PATH=/usr/local/bin:$PATH
 export HISTSIZE="" #infinite history!
 
@@ -16,6 +17,14 @@ function unmark {
 function marks {
     \ls -l "$MARKPATH" | tail -n +2 | sed 's/  / /g' | cut -d' ' -f9- | awk -F ' -> ' '{printf "%-10s -> %s\n", $1, $2}'
 }
+
+function auto_complete_jump {
+    local cur=${COMP_WORDS[COMP_CWORD]}
+    local marks=$(find $MARKPATH -type l | awk -F '/' '{print $NF}')
+    COMPREPLY=($(compgen -W '${marks[@]}' -- "$cur"))
+    return 0
+}
+complete -o default -o nospace -F auto_complete_jump jump
 
 # ========
 #   GIT
@@ -40,9 +49,6 @@ if [ -f ~/.git-completion.bash ]; then
   . ~/.git-completion.bash
 fi
 
-# GitHUB stuff
-eval "$(hub alias -s)"
-
 # The prompt. Show the Git branch, too.
 export PS1="\W\[\033[32m\]\$(parse_git_branch)\[\033[00m\] $ "
 
@@ -55,5 +61,3 @@ case $- in
 esac
 
 source ~/.profile
-
-if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
