@@ -73,7 +73,9 @@ values."
          (auto-completion :variables
                           auto-completion-enable-help-tooltip t
                           auto-completion-enable-sort-by-usage t
-                          auto-completion-enable-snippets-in-popup t)
+                          auto-completion-enable-snippets-in-popup t
+                          auto-completion-tab-key-behavior 'complete
+                          auto-completion-private-snippets-directory "~/.emacs.d/snippets/")
          (version-control :variables
                           version-control-diff-tool 'diff-hl
                           version-control-global-margin t)
@@ -103,7 +105,7 @@ values."
    ;; A list of packages that cannot be updated.
    dotspacemacs-frozen-packages '()
    ;; A list of packages that will not be installed and loaded.
-   dotspacemacs-excluded-packages '(org-bullets)
+   dotspacemacs-excluded-packages '(org-bullets magithub)
    ;; Defines the behaviour of Spacemacs when installing packages.
    ;; Possible values are `used-only', `used-but-keep-unused' and `all'.
    ;; `used-only' installs only explicitly used packages and uninstall any
@@ -316,7 +318,7 @@ values."
    dotspacemacs-highlight-delimiters 'current
    ;; If non-nil, advise quit functions to keep server open when quitting.
    ;; (default nil)
-   dotspacemacs-persistent-server nil
+   dotspacemacs-persistent-server t
    ;; List of search tool executable names. Spacemacs uses the first installed
    ;; tool of the list. Supported tools are `rg', `ag', `pt', `ack' and `grep'.
    ;; (default '("rg" "ag" "pt" "ack" "grep"))
@@ -342,11 +344,10 @@ in `dotspacemacs/user-config'."
   (setq deft-directory "~/Google Drive/deft-notes")
   )
 
-(defun stage-and-commit ()
-  "Run `some-command' and `some-other-command' in sequence."
-  (interactive)
-  (magit-stage-file)
-  (magit-commit))
+(defun save-if-bufferfilename ()
+  (if (buffer-file-name)
+      (progn (save-buffer))
+    (message "no file is associated to this buffer: do nothing")))
 
 (defun dotspacemacs/user-config ()
   "Configuration function for user code.
@@ -357,9 +358,10 @@ layers configuration. You are free to put any user code."
   (evil-define-key 'visual evil-surround-mode-map "s" 'evil-substitute)
   (evil-define-key 'visual evil-surround-mode-map "S" 'evil-surround-region)
 
+  (define-key evil-motion-state-map (kbd "RET") 'helm-yas-create-snippet-on-region)
+
   (spacemacs/toggle-indent-guide-globally)
   (spacemacs/toggle-fill-column-indicator-on)
-  (spacemacs/set-leader-keys "gc" 'stage-and-commit)
 
   ;; (spacemacs/toggle-mode-line)
   (spaceline-toggle-minor-modes-off)
@@ -370,10 +372,10 @@ layers configuration. You are free to put any user code."
   (spaceline-toggle-selection-info-off)
   (spaceline-toggle-buffer-position-off)
   (spaceline-toggle-buffer-modified-off)
-  (defadvice inf-ruby-console-auto (before activate-rvm-for-robe activate)
-    (rvm-activate-corresponding-ruby))
-  (add-hook 'ruby-mode-hook
-            (lambda () (rvm-activate-corresponding-ruby)))
+
+  (add-hook 'evil-insert-state-exit-hook 'save-if-bufferfilename)
+  (evil-set-initial-state 'git-commit-mode 'insert)
+
   (global-evil-surround-mode 1)
   (golden-ratio-mode 1)
   (rvm-use-default)
@@ -386,100 +388,34 @@ layers configuration. You are free to put any user code."
     (evil-terminal-cursor-changer-activate) ; or (etcc-on)
     )
   (setq-default
-               js2-basic-offset 2
-               css-indent-offset 2
-               web-mode-indent-style 2
-               web-mode-markup-indent-offset 2
-               web-mode-css-indent-offset 2
-    web-mode-code-indent-offset 2
-    web-mode-attr-indent-offset 2
-    web-mode-enable-current-element-highlight t
-    web-mode-enable-auto-quoting nil
-    web-mode-comment-style 2
-    powerline-default-separator 'nil
-    go-tab-width 2)
+   js2-basic-offset 2
+   js-indent-level 2
+   js-curly-indent-offset 0
+   css-indent-offset 2
+   web-mode-indent-style 2
+   web-mode-markup-indent-offset 2
+   web-mode-css-indent-offset 2
+   web-mode-code-indent-offset 2
+   web-mode-attr-indent-offset 2
+   web-mode-enable-current-element-highlight t
+   web-mode-enable-auto-quoting nil
+   web-mode-comment-style 2
+   powerline-default-separator 'nil
+   nginx-indent-level 2
+   go-tab-width 2
+   js2-mode-show-parse-errors nil
+   elm-format-on-save t
+   js2-mode-show-strict-warnings nil)
+
   (with-eval-after-load 'web-mode
     (add-to-list 'web-mode-indentation-params '("lineup-args" . nil))
     (add-to-list 'web-mode-indentation-params '("lineup-concats" . nil))
     (add-to-list 'web-mode-indentation-params '("lineup-calls" . nil)))
   )
 
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(elm-format-on-save t)
- '(elm-indent-after-keywords
-   (quote
-    (("of" 2)
-     ("in" 2 0)
-     ("{" 2)
-     "if" "then" "else" "let")))
- '(elm-indent-offset 2)
- '(js-curly-indent-offset 0)
- '(js-indent-level 2)
- '(js2-basic-offset 2 t)
- '(js2-indent-switch-body t)
- '(js2-mode-show-parse-errors nil)
- '(js2-mode-show-strict-warnings nil)
- '(magit-fetch-arguments nil)
- '(package-selected-packages
-   (quote
-    (lua-mode flycheck-elm ghc edn yapfify ruby-refactor pyvenv pytest pyenv-mode py-isort projectile-rails rake pip-requirements alert log4e gntp ob-elixir org nginx-mode minitest markdown-mode skewer-mode simple-httpd live-py-mode inflections findr json-snatcher json-reformat multiple-cursors js2-mode hy-mode helm-pydoc haml-mode gitignore-mode fringe-helper git-gutter+ git-gutter gh marshal logito pcache ht flyspell-correct flycheck evil-terminal-cursor-changer magit magit-popup git-commit with-editor paredit makey cython-mode web-completion-data dash-functional tern pos-tip haskell-mode company-anaconda peg cider seq queue clojure-mode inf-ruby yasnippet anaconda-mode pythonic company elixir-mode auto-complete php-mode yaml-mode xterm-color ws-butler wolfram-mode window-numbering which-key web-mode web-beautify wc-goal-mode volatile-highlights vi-tilde-fringe uuidgen use-package toc-org thrift tagedit stan-mode sql-indent spacemacs-theme spaceline smeargle slim-mode shell-pop scss-mode scad-mode sass-mode rvm ruby-tools ruby-test-mode rubocop rspec-mode robe reveal-in-osx-finder restclient restart-emacs rbenv rainbow-delimiters quelpa qml-mode pug-mode prodigy popwin phpunit phpcbf php-extras php-auto-yasnippets persp-mode pbcopy paradox ox-gfm osx-trash osx-dictionary orgit org-projectile org-present org-pomodoro org-plus-contrib org-download open-junk-file ob-http neotree multi-term move-text mmm-mode matlab-mode markdown-toc magit-gitflow magit-gh-pulls macrostep lorem-ipsum livid-mode linum-relative link-hint less-css-mode launchctl jump julia-mode json-mode js2-refactor js-doc intero info+ indent-guide ido-vertical-mode hyde hungry-delete htmlize hlint-refactor hl-todo hindent highlight-parentheses highlight-numbers highlight-indentation help-fns+ helm-themes helm-swoop helm-projectile helm-mode-manager helm-make helm-hoogle helm-gitignore helm-flx helm-descbinds helm-css-scss helm-company helm-c-yasnippet helm-ag haskell-snippets google-translate golden-ratio gnuplot github-search github-clone github-browse-file gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link git-gutter-fringe git-gutter-fringe+ gist gh-md flyspell-correct-helm flycheck-pos-tip flycheck-mix flycheck-haskell flx-ido fill-column-indicator feature-mode fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-magit evil-lisp-state evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-ediff evil-cleverparens evil-args evil-anzu eshell-z eshell-prompt-extras esh-help erlang emoji-cheat-sheet-plus emmet-mode elm-mode elisp-slime-nav dumb-jump drupal-mode discover-my-major diff-hl deft company-web company-tern company-statistics company-quickhelp company-ghci company-ghc company-emoji company-cabal column-enforce-mode color-theme-sanityinc-tomorrow coffee-mode cmm-mode clojure-snippets clj-refactor clean-aindent-mode cider-eval-sexp-fu chruby bundler auto-yasnippet auto-highlight-symbol auto-dictionary auto-compile arduino-mode alchemist aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line ac-ispell)))
- '(web-mode-attr-indent-offset 2 t))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(company-tooltip-common ((t (:inherit company-tooltip :weight bold :underline nil))))
- '(company-tooltip-common-selection ((t (:inherit company-tooltip-selection :weight bold :underline nil))))
- )
 (defun dotspacemacs/emacs-custom-settings ()
   "Emacs custom settings.
 This is an auto-generated function, do not modify its content directly, use
 Emacs customize menu instead.
 This function is called at the very end of Spacemacs initialization."
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(custom-safe-themes
-   (quote
-    ("06f0b439b62164c6f8f84fdda32b62fb50b6d00e8b01c2208e55543a6337433a" default)))
- '(elm-format-on-save t)
- '(elm-indent-after-keywords
-   (quote
-    (("of" 2)
-     ("in" 2 0)
-     ("{" 2)
-     "if" "then" "else" "let")))
- '(elm-indent-offset 2)
- '(evil-want-Y-yank-to-eol nil)
- '(js-curly-indent-offset 0)
- '(js-indent-level 2)
- '(js2-basic-offset 2 t)
- '(js2-indent-switch-body t)
- '(js2-mode-show-parse-errors nil)
- '(js2-mode-show-strict-warnings nil)
- '(magit-fetch-arguments nil)
- '(magit-log-arguments (quote ("--graph" "--decorate" "-n256")))
- '(nginx-indent-level 2)
- '(package-selected-packages
-   (quote
-    (symon string-inflection sayid password-generator godoctor go-rename evil-org evil-lion editorconfig dante company-php ac-php-core xcscope company-lua browse-at-remote smyx-theme vimrc-mode dactyl-mode lua-mode flycheck-elm ghc edn yapfify ruby-refactor pyvenv pytest pyenv-mode py-isort projectile-rails rake pip-requirements alert log4e gntp ob-elixir org nginx-mode minitest markdown-mode skewer-mode simple-httpd live-py-mode inflections findr json-snatcher json-reformat multiple-cursors js2-mode hy-mode helm-pydoc haml-mode gitignore-mode fringe-helper git-gutter+ git-gutter gh marshal logito pcache ht flyspell-correct flycheck evil-terminal-cursor-changer magit magit-popup git-commit with-editor paredit makey cython-mode web-completion-data dash-functional tern pos-tip haskell-mode company-anaconda peg cider seq queue clojure-mode inf-ruby yasnippet anaconda-mode pythonic company elixir-mode auto-complete php-mode yaml-mode xterm-color ws-butler wolfram-mode window-numbering which-key web-mode web-beautify wc-goal-mode volatile-highlights vi-tilde-fringe uuidgen use-package toc-org thrift tagedit stan-mode sql-indent spacemacs-theme spaceline smeargle slim-mode shell-pop scss-mode scad-mode sass-mode rvm ruby-tools ruby-test-mode rubocop rspec-mode robe reveal-in-osx-finder restclient restart-emacs rbenv rainbow-delimiters quelpa qml-mode pug-mode prodigy popwin phpunit phpcbf php-extras php-auto-yasnippets persp-mode pbcopy paradox ox-gfm osx-trash osx-dictionary orgit org-projectile org-present org-pomodoro org-plus-contrib org-download open-junk-file ob-http neotree multi-term move-text mmm-mode matlab-mode markdown-toc magit-gitflow magit-gh-pulls macrostep lorem-ipsum livid-mode linum-relative link-hint less-css-mode launchctl jump julia-mode json-mode js2-refactor js-doc intero info+ indent-guide ido-vertical-mode hyde hungry-delete htmlize hlint-refactor hl-todo hindent highlight-parentheses highlight-numbers highlight-indentation help-fns+ helm-themes helm-swoop helm-projectile helm-mode-manager helm-make helm-hoogle helm-gitignore helm-flx helm-descbinds helm-css-scss helm-company helm-c-yasnippet helm-ag haskell-snippets google-translate golden-ratio gnuplot github-search github-clone github-browse-file gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link git-gutter-fringe git-gutter-fringe+ gist gh-md flyspell-correct-helm flycheck-pos-tip flycheck-mix flycheck-haskell flx-ido fill-column-indicator feature-mode fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-magit evil-lisp-state evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-ediff evil-cleverparens evil-args evil-anzu eshell-z eshell-prompt-extras esh-help erlang emoji-cheat-sheet-plus emmet-mode elm-mode elisp-slime-nav dumb-jump drupal-mode discover-my-major diff-hl deft company-web company-tern company-statistics company-quickhelp company-ghci company-ghc company-emoji company-cabal column-enforce-mode color-theme-sanityinc-tomorrow coffee-mode cmm-mode clojure-snippets clj-refactor clean-aindent-mode cider-eval-sexp-fu chruby bundler auto-yasnippet auto-highlight-symbol auto-dictionary auto-compile arduino-mode alchemist aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line ac-ispell)))
- '(spaceline-helm-mode t)
- '(spaceline-info-mode t)
- '(tabbar-separator (quote (0.5)))
- '(web-mode-attr-indent-offset 2 t))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(company-tooltip-common ((t (:inherit company-tooltip :weight bold :underline nil))))
- '(company-tooltip-common-selection ((t (:inherit company-tooltip-selection :weight bold :underline nil))))
- '(spaceline-python-venv ((t (:distant-foreground "DarkMagenta" :foreground "light green")))))
-)
+  )
