@@ -405,7 +405,10 @@ layers configuration. You are free to put any user code."
    go-tab-width 2
    js2-mode-show-parse-errors nil
    elm-format-on-save t
-   js2-mode-show-strict-warnings nil)
+   js2-mode-show-strict-warnings nil
+   projectile-enable-caching t
+   shell-file-name "/bin/sh")
+
 
   (with-eval-after-load 'web-mode
     (add-to-list 'web-mode-indentation-params '("lineup-args" . nil))
