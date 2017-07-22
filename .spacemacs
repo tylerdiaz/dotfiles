@@ -47,7 +47,7 @@ values."
          erlang
          haskell
          javascript
-         (ruby :variables ruby-version-manager 'rvm)
+         ruby
          terraform
          react
          markdown
@@ -102,7 +102,6 @@ values."
                                       evil-terminal-cursor-changer
                                       ruby-refactor
                                       moonscript
-                                      rvm
                                       (vue-mode :location (recipe :fetcher github :repo "codefalling/vue-mode")))
    ;; A list of packages that cannot be updated.
    dotspacemacs-frozen-packages '()
