@@ -48,6 +48,7 @@ values."
          haskell
          javascript
          (ruby :variables ruby-version-manager 'rvm)
+         terraform
          react
          markdown
          typescript
@@ -60,7 +61,6 @@ values."
          (clojure :variables clojure-enable-fancify-symbols t)
          php
          ;; tools & applications
-         ;; eyebrowse
          prodigy
          git
          github
@@ -70,6 +70,7 @@ values."
          deft
          extra-langs
          evil-cleverparens
+         vim-powerline
          (auto-completion :variables
                           auto-completion-enable-help-tooltip t
                           auto-completion-enable-sort-by-usage t
@@ -101,7 +102,8 @@ values."
                                       evil-terminal-cursor-changer
                                       ruby-refactor
                                       moonscript
-                                      rvm)
+                                      rvm
+                                      (vue-mode :location (recipe :fetcher github :repo "codefalling/vue-mode")))
    ;; A list of packages that cannot be updated.
    dotspacemacs-frozen-packages '()
    ;; A list of packages that will not be installed and loaded.
@@ -167,7 +169,7 @@ values."
    dotspacemacs-startup-lists '((recents . 5)
                                 (projects . 7))
    ;; True if the home buffer should respond to resize events.
-   dotspacemacs-startup-buffer-responsive t
+   dotspacemacs-startup-buffer-responsive nil
    ;; Default major mode of the scratch buffer (default `text-mode')
    dotspacemacs-scratch-mode 'org-mode
    ;; List of themes, the first of the list is loaded when spacemacs starts.
@@ -178,11 +180,11 @@ values."
    dotspacemacs-colorize-cursor-according-to-state t
    ;; Default font. `powerline-scale' allows to quickly tweak the mode-line
    ;; size to make separators look not too crappy.
-   dotspacemacs-default-font '("Inconsolata for Powerline"
-                               :size 18
+   dotspacemacs-default-font '("Meslo LG M DZ for Powerline"
+                               :size 14
                                :weight normal
                                :width normal
-                               :powerline-scale 1)
+                               :powerline-scale 1.2)
    ;; The leader key
    dotspacemacs-leader-key "SPC"
    ;; The key used for Emacs commands (M-x) (after pressing on the leader key).
@@ -357,8 +359,7 @@ layers configuration. You are free to put any user code."
   (spacemacs/set-leader-keys "SPC" 'evil-avy-goto-char)
   (evil-define-key 'visual evil-surround-mode-map "s" 'evil-substitute)
   (evil-define-key 'visual evil-surround-mode-map "S" 'evil-surround-region)
-
-  (define-key evil-motion-state-map (kbd "RET") 'helm-yas-create-snippet-on-region)
+  (define-key evil-visual-state-map (kbd "RET") 'helm-yas-create-snippet-on-region)
 
   (spacemacs/toggle-indent-guide-globally)
   (spacemacs/toggle-fill-column-indicator-on)
@@ -378,7 +379,6 @@ layers configuration. You are free to put any user code."
 
   (global-evil-surround-mode 1)
   (golden-ratio-mode 1)
-  (rvm-use-default)
   (add-hook 'react-mode-hook 'emmet-mode)
   (add-hook 'elm-mode-hook #'elm-oracle-setup-completion)
   (global-auto-complete-mode)
@@ -389,6 +389,7 @@ layers configuration. You are free to put any user code."
     )
   (setq-default
    js2-basic-offset 2
+   ns-use-srgb-colorspace nil
    js-indent-level 2
    js-curly-indent-offset 0
    css-indent-offset 2
@@ -400,7 +401,7 @@ layers configuration. You are free to put any user code."
    web-mode-enable-current-element-highlight t
    web-mode-enable-auto-quoting nil
    web-mode-comment-style 2
-   powerline-default-separator 'nil
+   ;; powerline-default-separator 'nil
    nginx-indent-level 2
    go-tab-width 2
    js2-mode-show-parse-errors nil
@@ -408,7 +409,6 @@ layers configuration. You are free to put any user code."
    js2-mode-show-strict-warnings nil
    projectile-enable-caching t
    shell-file-name "/bin/sh")
-
 
   (with-eval-after-load 'web-mode
     (add-to-list 'web-mode-indentation-params '("lineup-args" . nil))
@@ -421,4 +421,4 @@ layers configuration. You are free to put any user code."
 This is an auto-generated function, do not modify its content directly, use
 Emacs customize menu instead.
 This function is called at the very end of Spacemacs initialization."
-  )
+)
