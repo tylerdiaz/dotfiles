@@ -9,6 +9,7 @@
 [core]
   autocrlf = input
   attributesfile = /Users/tylerdiaz/.gitattributes
+  ff = only
   excludesfile = /Users/tylerdiaz/.gitignore
   editor = emacs
 [color]
