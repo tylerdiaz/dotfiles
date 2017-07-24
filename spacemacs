@@ -174,7 +174,7 @@ values."
    ;; List of themes, the first of the list is loaded when spacemacs starts.
    ;; Press <SPC> T n to cycle to the next theme in the list (works great
    ;; with 2 themes variants, one dark and one light)
-   dotspacemacs-themes '(sanityinc-tomorrow-night)
+   dotspacemacs-themes '(sanityinc-tomorrow-bright)
    ;; If non nil the cursor color matches the state color in GUI Emacs.
    dotspacemacs-colorize-cursor-according-to-state t
    ;; Default font. `powerline-scale' allows to quickly tweak the mode-line
@@ -362,6 +362,7 @@ layers configuration. You are free to put any user code."
 
   (spacemacs/toggle-indent-guide-globally)
   (spacemacs/toggle-fill-column-indicator-on)
+  (spacemacs/toggle-truncate-lines-on) ;; I usually don't care what's beyond the line.
 
   ;; (spacemacs/toggle-mode-line)
   (spaceline-toggle-minor-modes-off)
