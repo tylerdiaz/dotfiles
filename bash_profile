@@ -1,5 +1,5 @@
 export EDITOR=emacsclient
-alias e="emacsclient -t"
+alias e="emacsclient -a '' -t"
 export PATH=/usr/local/bin:$PATH
 export HISTSIZE="" #infinite history!
 
