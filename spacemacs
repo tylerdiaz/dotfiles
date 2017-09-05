@@ -30,67 +30,70 @@ values."
    dotspacemacs-configuration-layer-path '()
    ;; List of configuration layers to load.
    dotspacemacs-configuration-layers
-       '(
-         go
-         ;; ----------------------------------------------------------------
-         ;; Example of useful layers you may want to use right away.
-         ;; Uncomment some layer names and press <SPC f e R> (Vim style) or
-         ;; <M-m f e R> (Emacs style) to install them.
-         ;; ----------------------------------------------------------------
-         helm
-         python
-         elm
-         nginx
-         emacs-lisp
-         yaml
-         elixir
-         erlang
-         haskell
-         javascript
-         ruby
-         terraform
-         react
-         markdown
-         typescript
-         ruby-on-rails
-         docker
-         restclient
-         sql
-         nginx
-         lua
-         (clojure :variables clojure-enable-fancify-symbols t)
-         php
-         ;; tools & applications
-         prodigy
-         git
-         github
-         spell-checking
-         syntax-checking
-         osx
-         deft
-         extra-langs
-         evil-cleverparens
-         vim-powerline
-         (auto-completion :variables
-                          auto-completion-enable-help-tooltip t
-                          auto-completion-enable-sort-by-usage t
-                          auto-completion-enable-snippets-in-popup t
-                          auto-completion-tab-key-behavior 'complete
-                          auto-completion-private-snippets-directory "~/.emacs.d/snippets/")
-         (version-control :variables
-                          version-control-diff-tool 'diff-hl
-                          version-control-global-margin t)
-         (shell :variables
-                shell-default-height 5
-                shell-default-shell 'ansi-term
-                shell-default-term-shell "~/bash_proxy"
-                shell-default-position 'bottom)
-         (org :variables
-              org-agenda-include-diary t
-              org-agenda-include-all-todo t
-              org-startup-indented t
-              org-replace-disputed-keys t
-              org-enable-github-support t)
+   '(
+     go
+     ;; ----------------------------------------------------------------
+     ;; Example of useful layers you may want to use right away.
+     ;; Uncomment some layer names and press <SPC f e R> (Vim style) or
+     ;; <M-m f e R> (Emacs style) to install them.
+     ;; ----------------------------------------------------------------
+     helm
+     python
+     elm
+     nginx
+     emacs-lisp
+     yaml
+     elixir
+     erlang
+     haskell
+     floobits
+     javascript
+     (ruby :variables
+           ruby-enable-enh-ruby-mode t
+           ruby-version-manager 'rbenv)
+     terraform
+     react
+     markdown
+     typescript
+     ruby-on-rails
+     docker
+     restclient
+     sql
+     nginx
+     lua
+     (clojure :variables clojure-enable-fancify-symbols t)
+     php
+     ;; tools & applications
+     prodigy
+     git
+     github
+     spell-checking
+     syntax-checking
+     osx
+     deft
+     extra-langs
+     evil-cleverparens
+     vim-powerline
+     (auto-completion :variables
+                      auto-completion-enable-help-tooltip t
+                      auto-completion-enable-sort-by-usage t
+                      auto-completion-enable-snippets-in-popup t
+                      auto-completion-tab-key-behavior 'complete
+                      auto-completion-private-snippets-directory "~/.emacs.d/snippets/")
+     (version-control :variables
+                      version-control-diff-tool 'diff-hl
+                      version-control-global-margin t)
+     (shell :variables
+            shell-default-height 5
+            shell-default-shell 'ansi-term
+            shell-default-term-shell "~/bash_proxy"
+            shell-default-position 'bottom)
+     (org :variables
+          org-agenda-include-diary t
+          org-agenda-include-all-todo t
+          org-startup-indented t
+          org-replace-disputed-keys t
+          org-enable-github-support t)
      )
    ;; List of additional packages that will be installed without being
    ;; wrapped in a layer. If you need some configuration for these
@@ -293,13 +296,9 @@ values."
    dotspacemacs-show-transient-state-title t
    ;; If non-nil show the color guide hint for transient state keys. (default t)
    dotspacemacs-show-transient-state-color-guide t
-   ;; If non-nil unicode symbols are displayed in the mode line. (default t)
-   dotspacemacs-mode-line-unicode-symbols t
-   ;; If non-nil smooth scrolling (native-scrolling) is enabled. Smooth
+   ;; If non-nil unicode symbols are displayed in the mode line. (default t) dotspacemacs-mode-line-unicode-symbols t ;; If non-nil smooth scrolling (native-scrolling) is enabled. Smooth
    ;; scrolling overrides the default behavior of Emacs which recenters point
-   ;; when it reaches the top or bottom of the screen. (default t)
-   dotspacemacs-smooth-scrolling t
-   ;; If non-nil line numbers are turned on in all `prog-mode' and `text-mode'
+   ;; when it reaches the top or bottom of the screen. (default t) dotspacemacs-smooth-scrolling t ;; If non-nil line numbers are turned on in all `prog-mode' and `text-mode'
    ;; derivatives. If set to `relative', also turns on relative line numbers.
    ;; (default nil)
    dotspacemacs-line-numbers nil
@@ -310,7 +309,7 @@ values."
    ;; (default nil)
    dotspacemacs-smartparens-strict-mode nil
    ;; If non-nil pressing the closing parenthesis `)' key in insert mode passes
-   ;; over any automatically added closing parenthesis, bracket, quote, etc…
+   ;; over any automatically added closing parenthesis, bracket, quote, etc‚Ä¶
    ;; This can be temporary disabled by pressing `C-q' before `)'. (default nil)
    dotspacemacs-smart-closing-parenthesis nil
    ;; Select a scope to highlight delimiters. Possible values are `any',
@@ -345,10 +344,26 @@ in `dotspacemacs/user-config'."
   (setq deft-directory "~/Google Drive/deft-notes")
   )
 
+(defun dotspacemacs/user-init ()
+  "Initialization function for user code.
+It is called immediately after `dotspacemacs/init'.  You are free to put almost
+any user code here.  The exception is org related code, which should be placed
+in `dotspacemacs/user-config'."
+  ;; (setq git-magit-status-fullscreen t)
+  (setq deft-directory "~/Google Drive/deft-notes")
+  )
+
 (defun save-if-bufferfilename ()
   (if (buffer-file-name)
       (progn (save-buffer))
     (message "no file is associated to this buffer: do nothing")))
+
+(defun current-line-at-pos ()
+  (count-lines 1 (point)))
+
+(defun open-in-sublime ()
+  (interactive)
+  (shell-command-to-string (format "subl %s:%s" buffer-file-name (current-line-at-pos))))
 
 (defun dotspacemacs/user-config ()
   "Configuration function for user code.
@@ -356,6 +371,7 @@ This function is called at the very end of Spacemacs initialization after
 layers configuration. You are free to put any user code."
   (evil-define-key 'visual evil-surround-mode-map "c" 'evilnc-comment-or-uncomment-lines)
   (spacemacs/set-leader-keys "SPC" 'evil-avy-goto-char)
+  (spacemacs/set-leader-keys "fq" 'open-in-sublime)
   (evil-define-key 'visual evil-surround-mode-map "s" 'evil-substitute)
   (evil-define-key 'visual evil-surround-mode-map "S" 'evil-surround-region)
   (define-key evil-visual-state-map (kbd "RET") 'helm-yas-create-snippet-on-region)
@@ -421,4 +437,24 @@ layers configuration. You are free to put any user code."
 This is an auto-generated function, do not modify its content directly, use
 Emacs customize menu instead.
 This function is called at the very end of Spacemacs initialization."
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(magit-commit-arguments (quote ("--verbose" "--gpg-sign=A4E613A1C99CD8C9")))
+ '(magit-log-arguments (quote ("-n64")))
+ '(magit-push-arguments (quote ("--force-with-lease")))
+ '(magit-rebase-arguments (quote ("--autostash")))
+ '(package-selected-packages
+   (quote
+    (enh-ruby-mode floobits vue-mode ssass-mode vue-html-mode vala-snippets vala-mode pkgbuild-mode logcat kivy-mode impatient-mode hoon-mode ebuild-mode terraform-mode hcl-mode yapfify yaml-mode xterm-color ws-butler wolfram-mode winum which-key web-mode web-beautify wc-goal-mode volatile-highlights vi-tilde-fringe uuidgen use-package toc-org tide thrift tagedit symon string-inflection stan-mode sql-indent spaceline smeargle slim-mode shell-pop scss-mode scad-mode sayid sass-mode rvm ruby-tools ruby-test-mode ruby-refactor rubocop rspec-mode robe reveal-in-osx-finder restclient-helm restart-emacs rbenv rainbow-delimiters qml-mode pyvenv pytest pyenv-mode py-isort pug-mode projectile-rails prodigy popwin pip-requirements phpunit phpcbf php-extras php-auto-yasnippets persp-mode pbcopy password-generator paradox ox-gfm osx-trash osx-dictionary orgit org-projectile org-present org-pomodoro org-download org-brain open-junk-file ob-restclient ob-http ob-elixir nginx-mode neotree multi-term move-text moonscript mmm-mode minitest matlab-mode markdown-toc magit-gitflow magit-gh-pulls macrostep lorem-ipsum livid-mode live-py-mode linum-relative link-hint less-css-mode launchctl jump julia-mode js2-refactor js-doc intero info+ indent-guide hy-mode hungry-delete htmlize hlint-refactor hl-todo hindent highlight-parentheses highlight-numbers highlight-indentation hide-comnt help-fns+ helm-themes helm-swoop helm-pydoc helm-purpose helm-projectile helm-mode-manager helm-make helm-hoogle helm-gitignore helm-flx helm-descbinds helm-css-scss helm-company helm-c-yasnippet helm-ag haskell-snippets google-translate golden-ratio godoctor go-rename go-guru go-eldoc gnuplot github-search github-clone gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link git-gutter-fringe git-gutter-fringe+ gist gh-md fuzzy flyspell-correct-helm flycheck-pos-tip flycheck-mix flycheck-haskell flycheck-elm flycheck-credo flx-ido fill-column-indicator feature-mode fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-terminal-cursor-changer evil-surround evil-search-highlight-persist evil-org evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-magit evil-lisp-state evil-lion evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-ediff evil-cleverparens evil-args evil-anzu eshell-z eshell-prompt-extras esh-help erlang emmet-mode elm-mode elisp-slime-nav editorconfig dumb-jump drupal-mode dockerfile-mode docker discover-my-major diff-hl deft dante cython-mode company-web company-tern company-statistics company-restclient company-quickhelp company-php company-lua company-go company-ghci company-ghc company-cabal company-anaconda column-enforce-mode color-theme-sanityinc-tomorrow coffee-mode cmm-mode clojure-snippets clj-refactor clean-aindent-mode cider-eval-sexp-fu chruby bundler browse-at-remote auto-yasnippet auto-highlight-symbol auto-dictionary auto-compile arduino-mode alchemist aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line ac-ispell)))
+ '(ruby-align-chained-calls nil)
+ '(ruby-deep-indent-paren (quote (40 91 93 t))))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
 )
