@@ -361,9 +361,13 @@ in `dotspacemacs/user-config'."
 (defun current-line-at-pos ()
   (count-lines 1 (point)))
 
+(defun calculate-column ()
+  (save-excursion (goto-char (point)) (current-column)))
+
 (defun open-in-sublime ()
   (interactive)
-  (shell-command-to-string (format "subl %s:%s" buffer-file-name (current-line-at-pos))))
+  (shell-command-to-string (format "subl %s:%s:%s" buffer-file-name (current-line-at-pos) (calculate-column)))
+  )
 
 (defun dotspacemacs/user-config ()
   "Configuration function for user code.
@@ -443,7 +447,7 @@ This function is called at the very end of Spacemacs initialization."
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(magit-commit-arguments (quote ("--verbose" "--gpg-sign=A4E613A1C99CD8C9")))
- '(magit-log-arguments (quote ("-n64")))
+ '(magit-log-arguments (quote ("-n128")))
  '(magit-push-arguments (quote ("--force-with-lease")))
  '(magit-rebase-arguments (quote ("--autostash")))
  '(package-selected-packages
