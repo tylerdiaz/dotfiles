@@ -1,43 +1,41 @@
-[user]
-  name = Tyler J. Diaz
-  username = tylerdiaz
-  email = me@tylerdiaz.com
-[filter "media"]
-  required = true
-  clean = git media clean %f
-  smudge = git media smudge %f
 [core]
-  autocrlf = input
-  attributesfile = /Users/tylerdiaz/.gitattributes
+	excludesfile = /Users/tyler/.gitignore_global
+	ff = only
+	autocrlf = input
   ff = only
-  excludesfile = /Users/tylerdiaz/.gitignore
-  editor = emacs
-[color]
-  ui = true
-  diff = auto
-[push]
-  default = current
-[url "https://"]
-  insteadOf = git://
+  editor = emacsclient
 [alias]
-  gr = grep -n
-  s = status
-  tree = log --graph --decorate --pretty=oneline --abbrev-commit
-[branch]
-  autosetuprebase = always
-[color "diff"]
-  whitespace = red reverse
+	undo = reset --soft HEAD^
+	stash-all = stash save --include-untracked
+	glog = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset'
+[diff]
+	renameLimit = 2048
+[user]
+	email = me@tylerdiaz.com
+	name = Tyler Diaz
+	signingkey = A4E613A1C99CD8C9
+[color "diff-highlight"]
+	oldNormal = red bold
+	oldHighlight = red bold 52
+	newNormal = green bold
+	newHighlight = green bold 22
+[color]
+	ui = true
+[github]
+	user = tylerdiaz
 [push]
-  default = current
-[status]
-  showUntrackedFiles = all
+	default = current
+[commit]
+	gpgsign = true
+[tag]
+	gpgsign = true
+[gpg]
+	program = /usr/local/bin/gpg
+[log]
+	showSignature = false
 [credential]
   helper = osxkeychain
-[filter "lfs"]
-  clean = git lfs clean %f
-  smudge = git lfs smudge %f
-  required = true
-[merge]
-  tool = ediff
-[mergetool "ediff"]
-  cmd = emacs -c -a \"\"  --eval \"(ediff-merge-files-with-ancestor \\\"$LOCAL\\\" \\\"$REMOTE\\\" \\\"$BASE\\\" nil \\\"$MERGED\\\")\"
+[branch]
+  autosetuprebase = always
+[url "https://"]
+  insteadOf = git://
