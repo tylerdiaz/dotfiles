@@ -32,11 +32,6 @@ values."
    dotspacemacs-configuration-layers
    '(
      go
-     ;; ----------------------------------------------------------------
-     ;; Example of useful layers you may want to use right away.
-     ;; Uncomment some layer names and press <SPC f e R> (Vim style) or
-     ;; <M-m f e R> (Emacs style) to install them.
-     ;; ----------------------------------------------------------------
      helm
      python
      elm
@@ -64,9 +59,7 @@ values."
      (clojure :variables clojure-enable-fancify-symbols t)
      php
      ;; tools & applications
-     prodigy
      git
-     github
      spell-checking
      syntax-checking
      osx
@@ -105,7 +98,8 @@ values."
                                       evil-terminal-cursor-changer
                                       ruby-refactor
                                       moonscript
-                                      (vue-mode :location (recipe :fetcher github :repo "codefalling/vue-mode")))
+                                      (vue-mode :location (recipe :fetcher github :repo "codefalling/vue-mode"))
+                                      prettier-eslint)
    ;; A list of packages that cannot be updated.
    dotspacemacs-frozen-packages '()
    ;; A list of packages that will not be installed and loaded.
@@ -309,7 +303,7 @@ values."
    ;; (default nil)
    dotspacemacs-smartparens-strict-mode nil
    ;; If non-nil pressing the closing parenthesis `)' key in insert mode passes
-   ;; over any automatically added closing parenthesis, bracket, quote, etc‚Ä¶
+   ;; over any automatically added closing parenthesis, bracket, quote, etc…
    ;; This can be temporary disabled by pressing `C-q' before `)'. (default nil)
    dotspacemacs-smart-closing-parenthesis nil
    ;; Select a scope to highlight delimiters. Possible values are `any',
@@ -334,15 +328,6 @@ values."
    ;; (default nil)
    dotspacemacs-whitespace-cleanup 'changed
    ))
-
-(defun dotspacemacs/user-init ()
-  "Initialization function for user code.
-It is called immediately after `dotspacemacs/init'.  You are free to put almost
-any user code here.  The exception is org related code, which should be placed
-in `dotspacemacs/user-config'."
-  ;; (setq git-magit-status-fullscreen t)
-  (setq deft-directory "~/Google Drive/deft-notes")
-  )
 
 (defun dotspacemacs/user-init ()
   "Initialization function for user code.
@@ -384,7 +369,6 @@ layers configuration. You are free to put any user code."
   (spacemacs/toggle-fill-column-indicator-on)
   (spacemacs/toggle-truncate-lines-on) ;; I usually don't care what's beyond the line.
 
-  ;; (spacemacs/toggle-mode-line)
   (spaceline-toggle-minor-modes-off)
   (spaceline-toggle-major-mode-off)
   (spaceline-toggle-version-control-off)
@@ -401,6 +385,13 @@ layers configuration. You are free to put any user code."
   (golden-ratio-mode 1)
   (add-hook 'react-mode-hook 'emmet-mode)
   (add-hook 'elm-mode-hook #'elm-oracle-setup-completion)
+
+  ;; prettier eslint
+;;   (add-hook 'js2-mode-hook (lambda () (add-hook 'after-save-hook 'prettier-eslint nil t)))
+;;   (add-hook 'react-mode-hook (lambda () (add-hook 'after-save-hook 'prettier-eslint nil t)))
+;;   (add-hook 'vue-mode-hook (lambda () (add-hook 'after-save-hook 'prettier-eslint nil t)))
+;;   (add-hook 'web-mode-hook (lambda () (add-hook 'after-save-hook 'prettier-eslint nil t)))
+
   (global-auto-complete-mode)
   (global-company-mode)
   (unless (display-graphic-p)
@@ -421,7 +412,6 @@ layers configuration. You are free to put any user code."
    web-mode-enable-current-element-highlight t
    web-mode-enable-auto-quoting nil
    web-mode-comment-style 2
-   ;; powerline-default-separator 'nil
    nginx-indent-level 2
    go-tab-width 2
    js2-mode-show-parse-errors nil
@@ -452,7 +442,7 @@ This function is called at the very end of Spacemacs initialization."
  '(magit-rebase-arguments (quote ("--autostash")))
  '(package-selected-packages
    (quote
-    (enh-ruby-mode floobits vue-mode ssass-mode vue-html-mode vala-snippets vala-mode pkgbuild-mode logcat kivy-mode impatient-mode hoon-mode ebuild-mode terraform-mode hcl-mode yapfify yaml-mode xterm-color ws-butler wolfram-mode winum which-key web-mode web-beautify wc-goal-mode volatile-highlights vi-tilde-fringe uuidgen use-package toc-org tide thrift tagedit symon string-inflection stan-mode sql-indent spaceline smeargle slim-mode shell-pop scss-mode scad-mode sayid sass-mode rvm ruby-tools ruby-test-mode ruby-refactor rubocop rspec-mode robe reveal-in-osx-finder restclient-helm restart-emacs rbenv rainbow-delimiters qml-mode pyvenv pytest pyenv-mode py-isort pug-mode projectile-rails prodigy popwin pip-requirements phpunit phpcbf php-extras php-auto-yasnippets persp-mode pbcopy password-generator paradox ox-gfm osx-trash osx-dictionary orgit org-projectile org-present org-pomodoro org-download org-brain open-junk-file ob-restclient ob-http ob-elixir nginx-mode neotree multi-term move-text moonscript mmm-mode minitest matlab-mode markdown-toc magit-gitflow magit-gh-pulls macrostep lorem-ipsum livid-mode live-py-mode linum-relative link-hint less-css-mode launchctl jump julia-mode js2-refactor js-doc intero info+ indent-guide hy-mode hungry-delete htmlize hlint-refactor hl-todo hindent highlight-parentheses highlight-numbers highlight-indentation hide-comnt help-fns+ helm-themes helm-swoop helm-pydoc helm-purpose helm-projectile helm-mode-manager helm-make helm-hoogle helm-gitignore helm-flx helm-descbinds helm-css-scss helm-company helm-c-yasnippet helm-ag haskell-snippets google-translate golden-ratio godoctor go-rename go-guru go-eldoc gnuplot github-search github-clone gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link git-gutter-fringe git-gutter-fringe+ gist gh-md fuzzy flyspell-correct-helm flycheck-pos-tip flycheck-mix flycheck-haskell flycheck-elm flycheck-credo flx-ido fill-column-indicator feature-mode fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-terminal-cursor-changer evil-surround evil-search-highlight-persist evil-org evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-magit evil-lisp-state evil-lion evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-ediff evil-cleverparens evil-args evil-anzu eshell-z eshell-prompt-extras esh-help erlang emmet-mode elm-mode elisp-slime-nav editorconfig dumb-jump drupal-mode dockerfile-mode docker discover-my-major diff-hl deft dante cython-mode company-web company-tern company-statistics company-restclient company-quickhelp company-php company-lua company-go company-ghci company-ghc company-cabal company-anaconda column-enforce-mode color-theme-sanityinc-tomorrow coffee-mode cmm-mode clojure-snippets clj-refactor clean-aindent-mode cider-eval-sexp-fu chruby bundler browse-at-remote auto-yasnippet auto-highlight-symbol auto-dictionary auto-compile arduino-mode alchemist aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line ac-ispell)))
+    (treemacs-projectile treemacs-evil treemacs pfuture evil-goggles prettier-js enh-ruby-mode floobits vue-mode ssass-mode vue-html-mode vala-snippets vala-mode pkgbuild-mode logcat kivy-mode impatient-mode hoon-mode ebuild-mode terraform-mode hcl-mode yapfify yaml-mode xterm-color ws-butler wolfram-mode winum which-key web-mode web-beautify wc-goal-mode volatile-highlights vi-tilde-fringe uuidgen use-package toc-org tide thrift tagedit symon string-inflection stan-mode sql-indent spaceline smeargle slim-mode shell-pop scss-mode scad-mode sayid sass-mode rvm ruby-tools ruby-test-mode ruby-refactor rubocop rspec-mode robe reveal-in-osx-finder restclient-helm restart-emacs rbenv rainbow-delimiters qml-mode pyvenv pytest pyenv-mode py-isort pug-mode projectile-rails prodigy popwin pip-requirements phpunit phpcbf php-extras php-auto-yasnippets persp-mode pbcopy password-generator paradox ox-gfm osx-trash osx-dictionary orgit org-projectile org-present org-pomodoro org-download org-brain open-junk-file ob-restclient ob-http ob-elixir nginx-mode neotree multi-term move-text moonscript mmm-mode minitest matlab-mode markdown-toc magit-gitflow magit-gh-pulls macrostep lorem-ipsum livid-mode live-py-mode linum-relative link-hint less-css-mode launchctl jump julia-mode js2-refactor js-doc intero info+ indent-guide hy-mode hungry-delete htmlize hlint-refactor hl-todo hindent highlight-parentheses highlight-numbers highlight-indentation hide-comnt help-fns+ helm-themes helm-swoop helm-pydoc helm-purpose helm-projectile helm-mode-manager helm-make helm-hoogle helm-gitignore helm-flx helm-descbinds helm-css-scss helm-company helm-c-yasnippet helm-ag haskell-snippets google-translate golden-ratio godoctor go-rename go-guru go-eldoc gnuplot github-search github-clone gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link git-gutter-fringe git-gutter-fringe+ gist gh-md fuzzy flyspell-correct-helm flycheck-pos-tip flycheck-mix flycheck-haskell flycheck-elm flycheck-credo flx-ido fill-column-indicator feature-mode fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-terminal-cursor-changer evil-surround evil-search-highlight-persist evil-org evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-magit evil-lisp-state evil-lion evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-ediff evil-cleverparens evil-args evil-anzu eshell-z eshell-prompt-extras esh-help erlang emmet-mode elm-mode elisp-slime-nav editorconfig dumb-jump drupal-mode dockerfile-mode docker discover-my-major diff-hl deft dante cython-mode company-web company-tern company-statistics company-restclient company-quickhelp company-php company-lua company-go company-ghci company-ghc company-cabal company-anaconda column-enforce-mode color-theme-sanityinc-tomorrow coffee-mode cmm-mode clojure-snippets clj-refactor clean-aindent-mode cider-eval-sexp-fu chruby bundler browse-at-remote auto-yasnippet auto-highlight-symbol auto-dictionary auto-compile arduino-mode alchemist aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line ac-ispell)))
  '(ruby-align-chained-calls nil)
  '(ruby-deep-indent-paren (quote (40 91 93 t))))
 (custom-set-faces
