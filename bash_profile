@@ -1,5 +1,5 @@
 export EDITOR=emacsclient
-alias e="emacsclient -a '' -t"
+alias e="TERM=xterm-256color emacsclient -a '' -t"
 export PATH=/usr/local/bin:$PATH
 export HISTSIZE="" #infinite history!
 
