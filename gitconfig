@@ -1,9 +1,9 @@
 [core]
-	excludesfile = /Users/tyler/.gitignore_global
+	excludesfile = /Users/tyler/.gitignore
 	ff = only
 	autocrlf = input
-  ff = only
-  editor = emacsclient
+	ff = only
+	editor = emacsclient
 [alias]
 	undo = reset --soft HEAD^
 	stash-all = stash save --include-untracked
@@ -13,7 +13,6 @@
 [user]
 	email = me@tylerdiaz.com
 	name = Tyler Diaz
-	signingkey = A4E613A1C99CD8C9
 [color "diff-highlight"]
 	oldNormal = red bold
 	oldHighlight = red bold 52
@@ -25,17 +24,9 @@
 	user = tylerdiaz
 [push]
 	default = current
-[commit]
-	gpgsign = true
-[tag]
-	gpgsign = true
-[gpg]
-	program = /usr/local/bin/gpg
 [log]
 	showSignature = false
-[credential]
-  helper = osxkeychain
 [branch]
-  autosetuprebase = always
+	autosetuprebase = always
 [url "https://"]
-  insteadOf = git://
+	insteadOf = git://
