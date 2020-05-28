@@ -1,7 +1,9 @@
-export EDITOR=emacsclient
+export EDITOR="emacsclient"
 alias e="TERM=xterm-256color emacsclient -a '' -t"
 export PATH=/usr/local/bin:$PATH
 export HISTSIZE="" #infinite history!
+
+export PATH=$PATH:/usr/local/opt/go/libexec/bin
 
 # Marking directories for quick navigation
 export MARKPATH=$HOME/.marks
@@ -38,7 +40,7 @@ parse_git_branch() {
 }
 
 # Git shortcuts
-alias gir="git rebase -i origin/master"
+# alias gir="git rebase -i origin/master"
 alias gcm="git checkout master"
 alias grom="git fetch && git rebase origin/master"
 alias g-="git checkout @{-1}"
@@ -60,4 +62,5 @@ case $- in
    *i*) source ~/.bashrc
 esac
 
-source ~/.profile
+# Add Visual Studio Code (code)
+export PATH="$PATH:/Applications/Visual Studio Code - Insiders.app/Contents/Resources/app/bin/"
